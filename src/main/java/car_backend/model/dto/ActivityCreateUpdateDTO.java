@@ -10,5 +10,7 @@ import lombok.AllArgsConstructor;
 public class ActivityCreateUpdateDTO {
 
     private GeneralInformationDetailsDTO generalInformation;
-    
+    private OrganizationalUnitDto organizationalUnit;
+    private SubProcessDto subProcess;
+    private ApplicationDto applicationDto;
 }

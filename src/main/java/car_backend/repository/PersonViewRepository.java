@@ -1,0 +1,13 @@
+package car_backend.repository;
+
+import car_backend.model.dao.views.PersonView;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface PersonViewRepository extends JpaRepository<PersonView, String> {
+
+    List<PersonView> findByUoId(String uoId);
+}

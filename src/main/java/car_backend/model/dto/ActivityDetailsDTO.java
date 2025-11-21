@@ -10,4 +10,10 @@ import lombok.AllArgsConstructor;
 public class ActivityDetailsDTO {
 
     private GeneralInformationDetailsDTO generalInformation;
+
+    private OrganizationalUnitDto organizationalUnitDto;
+
+    private SubProcessDto subProcessDto;
+
+    private ApplicationDto applicationDto;
 } 

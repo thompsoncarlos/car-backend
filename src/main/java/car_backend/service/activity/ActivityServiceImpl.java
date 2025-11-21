@@ -1,4 +1,4 @@
-package car_backend.service;
+package car_backend.service.activity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

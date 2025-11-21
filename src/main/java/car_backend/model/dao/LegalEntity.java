@@ -1,0 +1,26 @@
+package car_backend.model.dao;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "PHI_REF_LEGAL_ENTITY")
+public class LegalEntity {
+
+    @Id
+    @Column(name = "LEGAL_ENTITY_ID")
+    private String legalEntityId;
+
+    @Column(name = "LEGAL_ENTITYLABEL")
+    private String legalEntityLabel;
+}
