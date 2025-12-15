@@ -56,14 +56,19 @@ public class ActivityController {
         activityService.updateActivity(id, activity);
         return ResponseEntity.ok().body("Updated");
 
+    @GetMapping("/activity/{activity_id}")
+    public ResponseEntity<ActivityDetailsDto> getActivity(@PathVariable(name = "activity_id") Long id) {
+        return ResponseEntity.ok().body(activityService.getActivity(id));
+    }
+    
     @GetMapping("/activity/report")
     public ResponseEntity<byte[]> downloadActivitiesReport() {
         try {
-            byte[] bytes = excelBuilder.buildReport(activityService.getReport(null));
+            byte[] bytes = excelBuilder.buildReport(activityFileService.getReport(null));
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.RELEVANT_SERVICES.getDateMask());
-            String dateTime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.RELEVANT_SERVICES.getNamePrefix() + dateTime + ReportFilesInformation.RELEVANT_SERVICES.getExtension();
+            String datetime = LocalDateTime.now().format(formatter);
+            String filename = ReportFilesInformation.RELEVANT_SERVICES.getNamePrefix() + datetime + ReportFilesInformation.RELEVANT_SERVICES.getExtension();
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.RELEVANT_SERVICES.getAttachment() + filename + "\"")

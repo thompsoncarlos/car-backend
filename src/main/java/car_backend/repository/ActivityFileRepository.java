@@ -1,5 +1,7 @@
 package car_backend.repository;
 
+import car_backend.model.dao.files.ActivityFile;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ActivityFileRepository {
+public interface ActivityFileRepository extends JpaRepository<ActivityFile, String> {
 
     @Query("SELECT DISTINCT a.activityId as serviceId, " +
             "NULL as serviceType, " +
@@ -28,10 +30,10 @@ public interface ActivityFileRepository {
             "NULL as businessReorganizationPlan, " +
             "NULL as alternativeMitigatingActions, " +
             "NULL as criticalIct, " +
-            "NULL as ictService, " +
+            "NULL as ictService " +
             "FROM ActivityFile a " +
             "LEFT OUTER JOIN ActivityOrganizationalUnit auo " +
-            "ON a.activityid = auo.activityId " +
+            "ON a.activityId = auo.activityId " +
             "WHERE a.sqlLoadId = :sqlLoadId")
     List<Object[]> findActivitiesRelevantServices(@Param("sqlLoadId") String sqlLoadId);
 }
