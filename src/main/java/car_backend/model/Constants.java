@@ -6,12 +6,7 @@ public class Constants {
 
     public static Long NEW_ACTIVITY_VERSION = 0L;
 
-    public  static String[] REPORT_HEADERS = {
-            "Processus",
-            "Sous Processus",
-            "Entité",
-            "UO",
-            "Activité",
-            "Statut"
-    };
+    public static String REPORT_FILENAME = "activities_report.xlsx";
+
+    public static String REPORT_DOWNLOAD_HEAD_VALUES = "attachment; filename=\"" + REPORT_FILENAME + "\"";
 }

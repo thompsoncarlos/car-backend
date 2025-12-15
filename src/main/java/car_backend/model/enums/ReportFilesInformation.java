@@ -1,0 +1,23 @@
+package car_backend.model.enums;
+
+import lombok.Getter;
+
+@Getter
+public enum ReportFilesInformation {
+
+    RELEVANT_SERVICES("RelevantServices_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xls", "application/vnd.ms-excel");
+
+    private String namePrefix;
+    private String dateMask;
+    private String attachment;
+    private String extension;
+    private String excelMediaType;
+
+    ReportFilesInformation(String namePrefix, String dateMask, String attachment, String extension, String excelMediaType) {
+        this.namePrefix = namePrefix;
+        this.dateMask = dateMask;
+        this.attachment = attachment;
+        this.extension = extension;
+        this.excelMediaType = excelMediaType;
+    }
+}
