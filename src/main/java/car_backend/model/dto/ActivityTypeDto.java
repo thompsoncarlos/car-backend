@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ActivityTypeDto {
 
-    private Long typeId;
+    private String typeId;
     private String typeName;
 }

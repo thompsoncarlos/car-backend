@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ActivityAdapter {
 
-    private ActivityAdapter() {}
+     private ActivityAdapter() {}
 
     public static Activity adaptToModel(ActivityCreateUpdateDto activityDTO) {
         Activity activity = new Activity();
@@ -25,31 +25,42 @@ public class ActivityAdapter {
     }
 
     public static Activity adaptToModelUpdate(Activity activity, ActivityCreateUpdateDto activityDTO) {
-        activity.setActivityName(activityDTO.getGeneralInformation().getActivityName());
-        activity.setActivityDescription(activityDTO.getGeneralInformation().getActivityDescription());
+        activity.setActivityLabel(activityDTO.getGeneralInformation().getName());
+        activity.setActivityDescription(activityDTO.getGeneralInformation().getDescription());
         activity.setStatus(StatusEnum.DRAFT.getValue());
         activity.setCreationDate(LocalDateTime.now());
         return activity;
     }
 
-    public static Activity adaptToModelValidate(Activity activity) {
-        Long currentVersion = activity.getActivityVersion();
-        activity.setStatus(StatusEnum.VALIDATED.getValue());
-        activity.setActivityVersion(currentVersion + 1);
-        return activity;
+    public static ActivityInput adaptToModelValidate(ActivityInput activityInput) {
+        Long currentVersion = activityInput.getActivityVersion();
+        activityInput.setStatus(StatusEnum.VALIDATED.getValue());
+        activityInput.setActivityVersion(currentVersion + 1);
+        return activityInput;
     }
 
-    public static List<ActivityDetailsDTO> adaptToDtoList(List<Activity> activities) {
-        List<ActivityDetailsDTO> activitiesDto = new ArrayList<>();
+    public static List<ActivityDetailsDto> adaptToDtoList(List<Activity> activities) {
+        List<ActivityDetailsDto> activitiesDto = new ArrayList<>();
         for (Activity activity : activities) {
             activitiesDto.add(adaptToDto(activity));
         }
-        return  activitiesDto;
+        return activitiesDto;
     }
 
-    public static ActivityDetailsDTO adaptToDto(Activity activity) {
-        ActivityDetailsDTO activityDetails = new ActivityDetailsDTO();
-        activityDetails.setGeneralInformation(adaptToGeneralInformationDto(activity));
+    public static ActivityDetailsDto adaptToDto(Activity activity) {
+        ActivityDetailsDto activityDetails = new ActivityDetailsDto();
+        activityDetails.setGeneralInformation(GeneralInformationAdapter.adaptToGeneralInformationDto(activity));
+        //activityDetails.setOrganizationUnit(adaptToDto(activityInput.getOrganizationalUnit()));
         return activityDetails;
+    }
+
+    public static List<ActivityDetailsDto> adaptViewToDtoList(List<ActivityView> activityViewList) {
+        List<ActivityDetailsDto> output = new ArrayList<>();
+        for (ActivityView activityView : activityViewList) {
+            ActivityDetailsDto activityDetailsDto = new ActivityDetailsDto();
+            activityDetailsDto.setGeneralInformation(GeneralInformationAdapter.adaptViewToDto(activityView));
+            output.add(activityDetailsDto);
+        }
+        return output;
     }
 }

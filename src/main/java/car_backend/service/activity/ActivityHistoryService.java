@@ -4,7 +4,7 @@ import car_backend.model.dao.Activity;
 
 public interface ActivityHistoryService {
 
-    void addActivityToHistory(Activity activity);
+    void addActivityToHistory(ActivityInput activityInput);
 
-    void updateActivityHistory(Activity activity);
+    void updateActivityHistory(ActivityInput activityInput);
 }

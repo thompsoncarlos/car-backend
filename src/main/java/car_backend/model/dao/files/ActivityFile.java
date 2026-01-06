@@ -17,7 +17,10 @@ import java.time.LocalDateTime;
 @Table(name = "PHI_T_FILES_ACTIVITY")
 public class ActivityFile {
 
-    @Id
+     @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "ACTIVITY_ID")
     private String activityId;
 
@@ -60,7 +63,7 @@ public class ActivityFile {
     @Column(name = "COL_CHECK")
     private String check;
 
-    @Column(name = "COMMENTARIES")
+    @Column(name = "COMMENTAIRES")
     private String commentaries;
 
     @Column(name = "ROW_UPDATE_DATE")
@@ -69,6 +72,6 @@ public class ActivityFile {
     @Column(name = "SQLLDR_LOAD_ID")
     private String sqlLoadId;
 
-
-
+    @Column(name = "VIRTUAL_ROWID")
+    private String virtualRowId;
 }

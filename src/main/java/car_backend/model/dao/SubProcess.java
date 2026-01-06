@@ -18,6 +18,9 @@ import lombok.Setter;
 public class SubProcess {
 
     @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "SUB_PROCESS_ID")
     private String subProcessId;
 
@@ -29,4 +32,13 @@ public class SubProcess {
 
     @Column(name = "PROCESS_LABEL")
     private String processLabel;
+
+    @Column(name = "ROW_UPDATE_DATE")
+    private LocalDateTime updateDateRow;
+
+    @Column(name = "SQLLDR_LOAD_ID")
+    private String sqlLoadId;
+
+    @Column(name = "VIRTUAL_ROWID")
+    private String virtualRowId;
 }

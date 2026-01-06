@@ -12,7 +12,7 @@ public class GeneralInformationDto {
 
     private String name;
     private String type;
-    @Size (max = 50, message = "Description can't have more then 50 characters")
+    @Size (max = 500, message = "Description can't have more then 500 characters")
     private String description;
     private String status;
 }

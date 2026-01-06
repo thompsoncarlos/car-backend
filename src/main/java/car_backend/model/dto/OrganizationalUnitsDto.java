@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class OrganizationalUnitsDto {
 
-    private List<OrganizationalUnitDto> organizationalUnitDtoList;
+     private List<OrganizationalUnitDto> organizationalUnitList;
 }

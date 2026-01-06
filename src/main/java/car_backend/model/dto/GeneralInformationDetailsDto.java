@@ -9,8 +9,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GeneralInformationDetailsDto {
 
-    private Long activityId;
-    private String activityName;
-    private String activityType;
-    private String activityDescription;
+    private String id;
+    private String name;
+    private String description;
+    private String status;
+    private String version;
+
+
+    private String reviewDate;
+    private String reviewedBy;
+    private String updateHistory;
 }

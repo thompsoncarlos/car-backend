@@ -1,7 +1,11 @@
 package car_backend.utils.reports;
 
-import car_backend.model.excel.RelevantServicesReport;
-import car_backend.model.enums.HeaderRelevantServices;
+import car_backend.model.excel.ReportZ01;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -9,70 +13,49 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ReportsExcelBuilder {
-
-    private static final String SERV_1 = "Relevant Services";
 
     private CellStyle dateStyle;
     private CellStyle headerStyle;
 
-    public byte[] buildReport(List<RelevantServicesReport> servicesReportList) throws IOException {
+    public byte[] buildReport(List<ReportZ01> servicesReportList) throws IOException {
 
-        SXSSFWorkbook workbook = new SXSSFWorkbook();
-        initStyle(workbook);
-        writeRelevantServices(workbook, servicesReportList);
-
-        return workbookToBytes(workbook);
-    }
-
-    private void initStyle(Workbook workbook) {
-        dateStyle = workbook.createCellStyle();
-        dateStyle.setDataFormat((short) 15);
-
-        headerStyle = workbook.createCellStyle();
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        headerStyle.setFillForegroundColor(IndexedColors.LAVENDER.index);
-        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-        headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-    }
-
-    private void writeHeaders(Sheet sheet, String[] headers) {
-        Row headerRow = sheet.createRow(0);
-        for (int i = 0; i < headers.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-            cell.setCellStyle(headerStyle);
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("templates/report_Z01.xlsx")) {
+            if (inputStream == null) {
+                log.error("Template File Not Found");
+                throw new IOException(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            }
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            writeRelevantServices(workbook.getSheetAt(0), servicesReportList);
+            return workbookToBytes(workbook);
         }
     }
 
-    private void writeRelevantServices(Workbook workbook, List<RelevantServicesReport> services) {
+    private void writeRelevantServices(XSSFSheet serviceSheet, List<ReportZ01> services) {
 
-        SXSSFSheet serviceSheet = (SXSSFSheet) workbook.createSheet(SERV_1);
-        serviceSheet.trackAllColumnsForAutoSizing();
-
-        String[] headers = HeaderRelevantServices.getLabels();
-        writeHeaders(serviceSheet, headers);
-
-        int rowCount = 1;
-        for (RelevantServicesReport relevantService : services) {
+        int rowCount = 5;
+        for (ReportZ01 relevantService : services) {
             Row row = serviceSheet.createRow(rowCount++);
             writeRelevantService(relevantService, row);
         }
 
-        for (int i = 0; i < headers.length; i++) {
-            serviceSheet.autoSizeColumn(i);
-        }
     }
 
-    private void writeRelevantService(RelevantServicesReport report, Row row) {
-        int cellCount = 0;
+    private void writeRelevantService(ReportZ01 report, Row row) {
+        int cellCount = 1;
         fillCellWithString(report.getServiceId(), row, cellCount++);
-        fillCellWithString(null, row, cellCount++);
-        fillCellWithString(report.getServiceUniqueLabel(), row, cellCount);
+        fillCellWithString(report.getServiceType(), row, cellCount++);
+        fillCellWithString(report.getServiceUniqueLabel(), row, cellCount++);
+        fillCellWithString(report.getServiceRecipientName(), row, cellCount++);
+        fillCellWithString(report.getServiceRecipientCode(), row, cellCount++);
+        fillCellWithString(report.getServiceProviderEntityName(), row, cellCount++);
+        fillCellWithString(report.getServiceProviderEntityCode(), row, cellCount);
     }
 
     private void fillCellWithString(String value, Row row, int cellCount) {
@@ -112,4 +95,5 @@ public class ReportsExcelBuilder {
 
         return bytes;
     }
+
 }

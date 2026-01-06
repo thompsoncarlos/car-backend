@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api")
-public class OrganizationUnitController {
+@RequestMapping(value ="/api")
+public class OrganizationalUnitController {
 
     @Autowired
-    OrganizationUnitService uoService;
+    OrganizationalUnitService uoService;
 
     @GetMapping("/organizational-unit")
-    public ResponseEntity<OrganizationalUnitsDto> getUoList() { return ResponseEntity.ok().body(uoService.uoList()); }
+    public ResponseEntity<OrganizationalUnitsDto> getUoList() {
+        return ResponseEntity.ok().body(uoService.uoList());
+    }
 }

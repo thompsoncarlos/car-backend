@@ -15,8 +15,9 @@ import lombok.Setter;
 @Table(name = "PHI_T_FILES_ACTIVITY_PRESTATION")
 public class ActivityPrestation {
 
-    @Column(name = "PRESTATION_ID")
-    private String prestationId;
+    @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
 
     @Column(name = "ACTIVITY_ID")
     private String activityId;
@@ -24,12 +25,15 @@ public class ActivityPrestation {
     @Column(name = "ACTIVITY_LABEL")
     private String activityLabel;
 
+    @Column(name = "PRESTATION_ID")
+    private String prestationId;
+
     @Column(name = "IS_BLOCKING")
     @Enumerated(EnumType.STRING)
     private OptionsEnum isBlocking;
 
-    @Column(name = "PRESTATION_DESCRIPTION")
-    private String prestationDescription;
+    @Column(name = "PRESTATION_LABEL")
+    private String prestationLabel;
 
     @Column(name = "PRESTATION_CATEGORY")
     private String prestationCategory;
@@ -44,6 +48,18 @@ public class ActivityPrestation {
     @Column(name = "PROVIDER_LABEL")
     private String providerLabel;
 
-    @Column(name = "COMMNETAIRES")
+    @Column(name = "COMMENTAIRES")
     private String commentaries;
+
+    @Column(name = "ROW_UPDATE_DATE")
+    private LocalDateTime updateDateRow;
+
+    @Column(name = "PRESTATION_DESCRIPTION")
+    private String prestationDescription;
+
+    @Column(name = "SQLLDR_LOAD_ID")
+    private String sqlLoadId;
+
+    @Column(name = "VIRTUAL_ROWID")
+    private String virtualRowId;
 }

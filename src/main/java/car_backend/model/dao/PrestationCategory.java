@@ -16,15 +16,9 @@ import lombok.Setter;
 public class PrestationCategory {
 
     @Id
-    private Long id;
+    @Column(name = "PRESTATION_TYPE_ID")
+    private Long prestationTypeId;
 
     @Column(name = "PRESTATION_CATEGORY_LABEL")
     private String prestationName;
-
-    @Column(name = "ONLY_SERVICE")
-    @Enumerated(EnumType.STRING)
-    private OptionsEnum onlyService;
-
-    @Column(name = "PRESTATION_TYPE_ID")
-    private Long prestationTypeId;
 }

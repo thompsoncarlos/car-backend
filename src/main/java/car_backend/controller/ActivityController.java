@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/activity")
+@RequestMapping(value ="/api/activity")
 public class ActivityController {
 
     @Autowired
@@ -24,8 +24,8 @@ public class ActivityController {
 
     @Operation(summary = "Create a new activity", description = "Add a new activity to the system")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Add a new activity to the system", content = @Content(schema = @Schema(implementation = ActivityDetailsDto.class))),
-        @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema()))
+            @ApiResponse(responseCode = "201", description = "User created successfully", content = @Content(schema = @Schema(implementation = ActivityDetailsDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema()))
     })
     @PostMapping
     public ResponseEntity<ActivityDetailsDto> create(@RequestBody ActivityCreateUpdateDto activity) {
@@ -42,19 +42,21 @@ public class ActivityController {
         return new ResponseEntity<>(activityService.updateActivity(id, activity), HttpStatus.CREATED);
     }
 
+
     @GetMapping("/{activity_id}")
     public ResponseEntity<ActivityDetailsDto> getActivity(@PathVariable(name = "activity_id") String id) {
         return ResponseEntity.ok().body(activityService.getActivity(id));
     }
-    
+
     @GetMapping("/uo/{uo_id}")
     public ResponseEntity<List<ActivityDetailsDto>> getActivitiesByUo(@PathVariable(name = "uo_id") String uoId) {
         return ResponseEntity.ok().body(activityService.getActivitiesByUo(uoId));
     }
-    
+
     @DeleteMapping("/{activity_id}")
     public ResponseEntity<?> deleteDraft(@PathVariable(name = "activity_id") String id) {
         activityService.deleteActivityDraft(id);
         return ResponseEntity.noContent().build();
     }
+
 }

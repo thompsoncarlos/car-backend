@@ -9,18 +9,21 @@ import java.util.List;
 
 public class OrganizationUnitAdapter {
 
-    private OrganizationUnitAdapter() {}
+   private OrganizationalUnitAdapter() {}
 
     public static OrganizationalUnitsDto adaptToDtoList(List<OrganizationalUnit> organizationalUnits) {
         OrganizationalUnitsDto organizationalUnitsDto = new OrganizationalUnitsDto();
-        organizationalUnitsDto.setOrganizationalUnitDtoList(adaptToList(organizationalUnits));
+        organizationalUnitsDto.setOrganizationalUnitList(adaptToList(organizationalUnits));
         return organizationalUnitsDto;
+
     }
 
-    public static List<OrganizationalUnitDto> adaptToList(List<OrganizationalUnit> organizationalUnits) {
+    private static List<OrganizationalUnitDto> adaptToList(List<OrganizationalUnit> organizationalUnits) {
         List<OrganizationalUnitDto> result = new ArrayList<>();
         for (OrganizationalUnit uo : organizationalUnits) {
-            OrganizationalUnitDto unitDto = new OrganizationalUnitDto(uo.getId(), uo.getFrenchLabel());
+            OrganizationalUnitDto unitDto = new OrganizationalUnitDto();
+            unitDto.setId(uo.getId());
+            unitDto.setName(uo.getFrenchLabel());
             result.add(unitDto);
         }
         return result;
@@ -31,5 +34,6 @@ public class OrganizationUnitAdapter {
         uo.setId(organizationalUnit.getId());
         uo.setName(organizationalUnit.getFrenchLabel());
         return uo;
+
     }
 }

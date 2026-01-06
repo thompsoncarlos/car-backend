@@ -15,16 +15,4 @@ public class ActivityFileServiceImpl implements ActivityFileService {
     @Autowired
     private ActivityFileRepository repository;
 
-    @Override
-    public List<RelevantServicesReport> getReport(String sqlLoadId) {
-
-            return repository.findActivitiesRelevantServices("20251013_47843")
-                    .stream().map(row -> {
-                        RelevantServicesReport data = new RelevantServicesReport();
-                        data.setServiceId(row[0].toString());
-                        data.setServiceUniqueLabel(row[2].toString());
-                        return data;
-                    }).toList();
-
-    }
 }

@@ -12,4 +12,6 @@ public class OrganizationalUnitDto {
     private String Id;
 
     private String Name;
+
+    private String uoResponsible;
 }

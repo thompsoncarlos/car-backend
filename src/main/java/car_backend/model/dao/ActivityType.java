@@ -19,8 +19,11 @@ import lombok.Setter;
 public class ActivityType {
 
     @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "ACTIVITY_TYPE_ID")
-    private String activityTypeId;
+    private Long activityTypeId;
 
     @Column(name = "ACTIVITY_TYPE_LABEL")
     private String activityTypeLabel;
@@ -33,7 +36,4 @@ public class ActivityType {
 
     @Column(name = "AGREEMENT_IS_NECESSARY")
     private OptionsEnum agreementIsNecessary;
-
-    @Column(name = "STATUS")
-    private String status;
 }

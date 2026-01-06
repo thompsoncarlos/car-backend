@@ -18,6 +18,9 @@ import lombok.Setter;
 public class OrganizationalUnit {
 
     @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "ID_UO")
     private String id;
 
@@ -27,6 +30,6 @@ public class OrganizationalUnit {
     @Column(name = "UO_LABEL_FR")
     private String frenchLabel;
 
-    @Column(name = "ID_ESTABLISSEMENT")
+    @Column(name = "ID_ETABLISSEMENT")
     private String establishmentId;
 }

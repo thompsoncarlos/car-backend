@@ -18,6 +18,9 @@ import lombok.Setter;
 public class Person {
 
     @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "PERSON_LABEL")
     private String personLabel;
 
@@ -77,6 +80,9 @@ public class Person {
 
     @Column(name = "BZ8_POLESHORTDESCEN")
     private String poleShortDescen;
+
+    @Column(name = "BZ8_POLELONGDESCEN")
+    private String poleLongDescen;
 
     @Column(name = "Y78_EMPLOILIBELLER")
     private String emploilibeller;

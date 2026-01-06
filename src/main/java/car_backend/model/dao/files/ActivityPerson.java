@@ -16,8 +16,8 @@ import lombok.Setter;
 public class ActivityPerson {
 
     @Id
-    @Column(name = "PERSON_LABEL")
-    private String personLabel;
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
 
     @Column(name = "ACTIVITY_ID")
     private String activityId;
@@ -30,6 +30,9 @@ public class ActivityPerson {
 
     @Column(name = "ORGANIZATIONAL_UNIT_LABEL")
     private String organizationalUnitLabel;
+
+    @Column(name = "PERSON_LABEL")
+    private String personLabel;
 
     @Column(name = "FUNCTION")
     private String function;
@@ -44,5 +47,12 @@ public class ActivityPerson {
     @Column(name = "COMMENTAIRES")
     private String commentaries;
 
+    @Column(name = "ROW_UPDATE_DATE")
+    private LocalDateTime updateDateRow;
 
+    @Column(name = "SQLLDR_LOAD_ID")
+    private String sqlLoadId;
+
+    @Column(name = "VIRTUAL_ROWID")
+    private String virtualRowId;
 }

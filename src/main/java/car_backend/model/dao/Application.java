@@ -17,10 +17,22 @@ import lombok.Setter;
 @Table(name = "PHI_T_REF_APP")
 public class Application {
 
-    @Id
+        @Id
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
     @Column(name = "APPLICATION_LABEL")
     private String applicationLabel;
 
     @Column(name = "DEPOSITORY")
     private String depository;
+
+    @Column(name = "ROW_UPDATE_DATE")
+    private LocalDateTime updateDateRow;
+
+    @Column(name = "SQLLDR_LOAD_ID")
+    private String sqlLoadId;
+
+    @Column(name = "VIRTUAL_ROWID")
+    private String virtualRowId;
 }
