@@ -1,14 +1,14 @@
 package car_backend.adapter;
 
 import car_backend.model.dao.Activity;
-import car_backend.model.dto.GeneralInformationDetailsDTO;
+import car_backend.model.dto.GeneralInformationDetailsDto;
 
 public class GeneralInformationAdapter {
 
     private GeneralInformationAdapter() {}
 
-    public static GeneralInformationDetailsDTO adaptToGeneralInformationDto(Activity activity) {
-        GeneralInformationDetailsDTO detailsDTO = new GeneralInformationDetailsDTO();
+    public static GeneralInformationDetailsDto adaptToGeneralInformationDto(Activity activity) {
+        GeneralInformationDetailsDto detailsDTO = new GeneralInformationDetailsDto();
         detailsDTO.setActivityId(activity.getId());
         detailsDTO.setActivityDescription(activity.getActivityDescription());
         detailsDTO.setStatus(activity.getStatus());

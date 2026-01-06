@@ -7,10 +7,13 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityCreateUpdateDTO {
+public class ActivityDetailsDto {
 
-    private GeneralInformationDetailsDTO generalInformation;
+    private GeneralInformationDetailsDto generalInformation;
+
     private OrganizationalUnitDto organizationalUnit;
+
     private SubProcessDto subProcess;
-    private ApplicationDto applicationDto;
-}
+
+    private ApplicationDto applicationDTO;
+} 

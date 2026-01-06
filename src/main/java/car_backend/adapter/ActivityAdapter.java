@@ -2,8 +2,10 @@ package car_backend.adapter;
 
 import car_backend.model.Constants;
 import car_backend.model.dao.Activity;
-import car_backend.model.dto.ActivityCreateUpdateDTO;
-import car_backend.model.dto.ActivityDetailsDTO;
+import car_backend.model.dao.ActivityInput;
+import car_backend.model.dao.views.ActivityView;
+import car_backend.model.dto.ActivityCreateUpdateDto;
+import car_backend.model.dto.ActivityDetailsDto;
 import car_backend.model.enums.StatusEnum;
 
 import java.time.LocalDateTime;
@@ -14,17 +16,15 @@ public class ActivityAdapter {
 
     private ActivityAdapter() {}
 
-    public static Activity adaptToModel(ActivityCreateUpdateDTO activityDTO) {
+    public static Activity adaptToModel(ActivityCreateUpdateDto activityDTO) {
         Activity activity = new Activity();
-        activity.setActivityName(activityDTO.getGeneralInformation().getActivityName());
-        activity.setActivityDescription(activityDTO.getGeneralInformation().getActivityDescription());
-        activity.setStatus(StatusEnum.NEW.getValue());
-        activity.setActivityVersion(Constants.NEW_ACTIVITY_VERSION);
-        activity.setCreationDate(LocalDateTime.now());
+        activity.setActivityLabel(activityDTO.getGeneralInformation().getName());
+        activity.setActivityDescription(activityDTO.getGeneralInformation().getDescription());
+        activity.setSource(Constants.ACTIVITY_SOURCE_INPUT);
         return activity;
     }
 
-    public static Activity adaptToModelUpdate(Activity activity, ActivityCreateUpdateDTO activityDTO) {
+    public static Activity adaptToModelUpdate(Activity activity, ActivityCreateUpdateDto activityDTO) {
         activity.setActivityName(activityDTO.getGeneralInformation().getActivityName());
         activity.setActivityDescription(activityDTO.getGeneralInformation().getActivityDescription());
         activity.setStatus(StatusEnum.DRAFT.getValue());

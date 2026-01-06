@@ -10,16 +10,15 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_T_WEB_ACTIVITY_INPUT_USER")
+@Table(name = "PHI_T_ACTIVITY", schema = "HPIOA")
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ACTIVITY_ID")
-    private Long id;
+    private String activityId;
 
     @Column(name = "ACTIVITY_LABEL")
-    private String activityName;
+    private String activityLabel;
 
     @Column(name = "ACTIVITY_DESCRIPTION")
     private String activityDescription;

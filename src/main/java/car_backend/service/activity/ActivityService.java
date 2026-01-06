@@ -1,19 +1,21 @@
 package car_backend.service.activity;
 
-import car_backend.model.dto.ActivityCreateUpdateDTO;
-import car_backend.model.dto.ActivityDetailsDTO;
+import car_backend.model.dto.ActivityCreateUpdateDto;
+import car_backend.model.dto.ActivityDetailsDto;
 
 import java.util.List;
 
 public interface ActivityService {
-    
-    void createActivity(ActivityCreateUpdateDTO activityDTO);
 
-    void updateActivity(Long id, ActivityCreateUpdateDTO activityDTO);
+    ActivityDetailsDto createActivity(ActivityCreateUpdateDto activityDTO);
 
-    void validateUpdateActivity(Long id);
+    ActivityDetailsDto updateActivity(String id, ActivityCreateUpdateDto activityDTO);
 
-    ActivityDetailsDTO getActivity(Long id);
+    void deleteActivityDraft(String id);
 
-    List<ActivityDetailsDTO> getActivities();
+    ActivityDetailsDto getActivity(String id);
+
+    List<ActivityDetailsDto> getActivities();
+
+    List<ActivityDetailsDto> getActivitiesByUo(String uoId);
 }

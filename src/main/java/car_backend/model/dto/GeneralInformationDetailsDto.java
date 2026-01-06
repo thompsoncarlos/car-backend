@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GeneralInformationDetailsDTO {
+public class GeneralInformationDetailsDto {
 
     private Long activityId;
     private String activityName;
