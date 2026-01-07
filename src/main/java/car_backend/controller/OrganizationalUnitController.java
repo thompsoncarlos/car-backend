@@ -1,7 +1,7 @@
 package car_backend.controller;
 
 import car_backend.model.dto.OrganizationalUnitsDto;
-import car_backend.service.OrganizationUnitService;
+import car_backend.service.OrganizationalUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

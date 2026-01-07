@@ -16,7 +16,7 @@ public class ActivityInput {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ACTIVITY")
-    private Long id;
+    private String id;
 
     @Column(name = "ACTIVITY_LABEL")
     private String activityName;
@@ -28,7 +28,7 @@ public class ActivityInput {
     private String status;
 
     @Column(name = "VERSION_ACTIVITY")
-    private Long activityVersion;
+    private String activityVersion;
 
     @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;

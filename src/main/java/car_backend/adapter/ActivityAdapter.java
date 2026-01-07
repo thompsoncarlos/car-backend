@@ -33,7 +33,7 @@ public class ActivityAdapter {
     }
 
     public static ActivityInput adaptToModelValidate(ActivityInput activityInput) {
-        Long currentVersion = activityInput.getActivityVersion();
+        String currentVersion = activityInput.getActivityVersion();
         activityInput.setStatus(StatusEnum.VALIDATED.getValue());
         activityInput.setActivityVersion(currentVersion + 1);
         return activityInput;

@@ -1,6 +1,6 @@
 package car_backend.adapter;
 
-import car_backend.model.dao.Activity;
+import car_backend.model.dao.ActivityInput;
 import car_backend.model.dao.ActivityHistory;
 
 import java.time.LocalDateTime;
@@ -10,14 +10,14 @@ public class ActivityHistoryAdapter {
 
     private ActivityHistoryAdapter() {}
 
-    public static ActivityHistory adaptToModel(Activity activity) {
+    public static ActivityHistory adaptToModel(ActivityInput activityInput) {
         ActivityHistory activityHistory = new ActivityHistory();
-        activityHistory.setActivityId(activity.getId());
-        activityHistory.setActivityName(activity.getActivityName());
-        activityHistory.setActivityDescription(activity.getActivityDescription());
-        activityHistory.setStatus(activity.getStatus());
-        activityHistory.setActivityVersion(activity.getActivityVersion());
-        activityHistory.setCreationDate(Objects.isNull(activity.getCreationDate()) ? LocalDateTime.now() : activity.getCreationDate());
+        activityHistory.setActivityId(activityInput.getId());
+        activityHistory.setActivityName(activityInput.getActivityName());
+        activityHistory.setActivityDescription(activityInput.getActivityDescription());
+        activityHistory.setStatus(activityInput.getStatus());
+        activityHistory.setActivityVersion(activityInput.getActivityVersion());
+        activityHistory.setCreationDate(Objects.isNull(activityInput.getCreationDate()) ? LocalDateTime.now() : activity.getCreationDate());
         return activityHistory;
     }
 }

@@ -1,6 +1,5 @@
 package car_backend.model.dto;
 
-import car_backend.model.dao.Activity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

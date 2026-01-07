@@ -1,6 +1,6 @@
 package car_backend.service.activity;
 
-import car_backend.model.dao.Activity;
+import car_backend.model.dao.ActivityInput;
 
 public interface ActivityHistoryService {
 

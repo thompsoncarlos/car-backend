@@ -7,7 +7,7 @@ import car_backend.model.dto.OrganizationalUnitsDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizationUnitAdapter {
+public class OrganizationalUnitAdapter {
 
    private OrganizationalUnitAdapter() {}
 
