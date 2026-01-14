@@ -79,6 +79,6 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<ActivityDetailsDto> getActivitiesByUo(String uoId) {
         List<ActivityView> views = repository.getActivitiesByUoId(uoId);
-        return ActivityAdapter.adaptToViewToDtoList(views);
+        return ActivityAdapter.adaptViewToDtoList(views);
     }
 }

@@ -16,7 +16,7 @@ public class ActivityInput {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ACTIVITY")
-    private String id;
+    private Long id;
 
     @Column(name = "ACTIVITY_LABEL")
     private String activityName;

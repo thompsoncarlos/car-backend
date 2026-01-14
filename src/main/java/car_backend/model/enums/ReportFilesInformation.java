@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ReportFilesInformation {
 
-    RELEVANT_SERVICES("RelevantServices_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xls", "application/vnd.ms-excel");
+    Z01("ReportZ01_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel");
 
     private String namePrefix;
     private String dateMask;

@@ -17,7 +17,7 @@ public class ActivityHistoryAdapter {
         activityHistory.setActivityDescription(activityInput.getActivityDescription());
         activityHistory.setStatus(activityInput.getStatus());
         activityHistory.setActivityVersion(activityInput.getActivityVersion());
-        activityHistory.setCreationDate(Objects.isNull(activityInput.getCreationDate()) ? LocalDateTime.now() : activity.getCreationDate());
+        activityHistory.setCreationDate(Objects.isNull(activityInput.getCreationDate()) ? LocalDateTime.now() : activityInput.getCreationDate());
         return activityHistory;
     }
 }

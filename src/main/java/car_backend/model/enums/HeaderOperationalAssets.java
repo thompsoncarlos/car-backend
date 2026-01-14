@@ -1,4 +1,4 @@
-package fr.bpce.car.model.enums;
+package car_backend.model.enums;
 
 import lombok.Getter;
 

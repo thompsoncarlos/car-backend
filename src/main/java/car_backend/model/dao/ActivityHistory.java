@@ -21,7 +21,7 @@ public class ActivityHistory {
 
     @Id
     @Column(name = "ACTIVITY_ID")
-    private String activityId;
+    private Long activityId;
 
     @Column(name = "ACTIVITY_LABEL")
     private String activityName;
