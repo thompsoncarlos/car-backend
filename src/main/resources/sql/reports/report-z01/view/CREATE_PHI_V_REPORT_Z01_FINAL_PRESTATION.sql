@@ -1,0 +1,43 @@
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "HPIOA"."PHI_V_REPORT_Z01_FINAL_PRESTATION" ("SERVICE_IDENTIFIER_0005", "SERVICE_TYPE_0010", "UNIQUE_SERVICE_TITLE_BK_TAXO_0020", "SERVICE_RECIPIENT_NAME_0030", "SERVICE_RECIPIENT_CODE_0040", "SERVICE_PROVIDER_ENTITY_NAME_0050", "SERVICE_PROVIDER_ENTITY_CODE_0060", "SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070", "SERVICE_PROVIDER_PARENT_NAME_0080", "SERVICE_PROVIDER_PARENT_CODE_0090", "SERVICE_PROVIDER_PARENT_CODE_TYPE_0100", "SERVICE_PROVIDER_DELIVERY_0110", "CRITICALITY_0120", "CONTRACT_ID_0130", "GOVERNING_LAW_0140", "RESOLUTION_RESILIENCE_FEATURES_0150", "RESOLUTION_RESILIENCE_BRP_0160", "RESOLUTION_RESILIENCE_ALT_MIT_0170", "CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180", "ICT_SERVICE_UNDER_DORA_0190") AS 
+  select distinct
+a.activity_id   ---5
+,mapeba.eba_services_id  --10
+,a.activity_id||' - '||a.activity_label  Activty --20
+,mapeba.legal_entity_label --0030
+--,mapeba.crn_code  col_0040
+,nvl(mapeba.lei_code,nvl(mapeba.CRN_code ,nvl(mapeba.SIREN_CODE,'#UNV'))) as col_0040
+,map.supplier_label-- 0050
+,nvl(map.LEI_SUPPLIER_CODE,nvl(map.CRN_SUPPLIER ,nvl(map.SIREN_SIRET_SUPPLIER_CODE,'#UNV'))) as service_provider_entity_code_0060 --0060
+--, decode (map.LEI_SUPPLIER_CODE,null,decode(nvl(map.CRN_SUPPLIER ,map.SIREN_SIRET_SUPPLIER_CODE),null,'#UNV','Corporate registration number' ) ,'LEI')  col__0070--070
+,decode (map.LEI_SUPPLIER_CODE ,null  ,decode(map.CRN_SUPPLIER, null     ,decode(map.SIREN_SIRET_SUPPLIER_CODE,null,'#UNV','SIREN/SIRET'),'Corporate registration number' ) ,'LEI')  as col__0070
+
+,map.parent_supplier_label   --0080
+
+,nvl(map.parent_LEI_SUPPLIER_CODE,nvl(map.parent_CRN_SUPPLIER ,nvl(map.parent_SIREN_SIRET_SUPPLIER_CODE,'#N/A')) ) as service_provider_parent_code_0090 --0090
+--, decode (map.parent_LEI_SUPPLIER_CODE,null,decode(nvl(map.parent_CRN_SUPPLIER ,map.parent_SIREN_SIRET_SUPPLIER_CODE),null,'#N/A','Corporate registration number' ) ,'LEI')  col__0100--0100
+,decode (map.parent_LEI_SUPPLIER_CODE ,null  ,decode(map.parent_CRN_SUPPLIER, null     ,decode(map.parent_SIREN_SIRET_SUPPLIER_CODE,null,'#N/A','SIREN/SIRET'),'Corporate registration number' ) ,'LEI')  as col__0100
+
+,'External entity' as col__0110
+,a.critical_essential as col__0120 -- critical essentiel
+
+
+,map.contract_id --0130
+,map.governing_law --0140
+--,map.RESOLUTION_RESILIENCE_FEATURES -- 0150
+,nvl(par150.result_mapping,'Not assessed') ALTERNATIVE_MITIGATING_ACTIONS -- 0150
+,nvl(par150.result_mapping,'Not assessed') as col__0160
+--,map.ALTERNATIVE_MITIGATING_ACTIONS --0170
+,nvl(par170.result_mapping,'No') ALTERNATIVE_MITIGATING_ACTIONS -- 0170
+--,map.CRIT_ICT_THRD_P_SER_PROV_DORA --- 0180
+,decode(lower(map.CRIT_ICT_THRD_P_SER_PROV_DORA),'critical','yes','no')  CRIT_ICT_THRD_P_SER_PROV_DORA--- 0180
+,map.ICT_SERVICE_UNDER_DORA -- 0190
+
+from phi_t_activity a
+left outer join phi_v_activity_prestation_map map on a.activity_id=map.activity_id
+left outer join phi_v_activity_eba_entity_map mapeba on a.activity_id = mapeba.activity_id
+left outer join phi_t_param_report_z01 par170  on lower( map.ALTERNATIVE_MITIGATING_ACTIONS ) = lower(par170.mapping_value) and par170.col_number='0170'
+left outer join phi_t_param_report_z01 par150  on lower( map.RESOLUTION_RESILIENCE_FEATURES ) = lower(par150.mapping_value) and par150.col_number='0150'
+
+order by a.activity_id;
+

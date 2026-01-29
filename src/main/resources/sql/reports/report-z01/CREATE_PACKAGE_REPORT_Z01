@@ -1,0 +1,105 @@
+create or replace PACKAGE BODY P_report_Z01 AS
+
+
+Procedure truncate_work  is
+Begin
+execute immediate 'truncate table PHI_T_REPORT_Z01_FINAL                      ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_01                    ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_02                    ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_03                    ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_10_PRESTATION         ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_11_PRESTATION         ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_20_ACTIVITY           ';
+execute immediate 'truncate table PHI_T_REPORT_Z01_STEP_21_ACTIVITY           ';
+
+execute immediate 'truncate  table phi_t_report_z01_filter_activity';
+
+execute immediate 'truncate  table PHI_T_REPORT_Z01_FINAL';
+end truncate_work;
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+procedure prestation_work is 
+begin 
+
+
+
+insert into phi_t_report_z01_filter_activity (activity_id,type_relation,beneficiary_id)
+select distinct a.activity_id,upper('prestation') as type_relation,p.prestation_id  from 
+phi_t_activity a 
+join PHI_T_REL_ACTIVITY_PROVIDER_prestation app on a.activity_id = app.activity_id
+join phi_t_prestation p on p.prestation_id = app.prestation_id
+;
+
+insert into phi_t_report_z01_filter_activity (activity_id,type_relation,beneficiary_id)
+select DISTINCT a.activity_id,upper('activity') as type_relation,a2.activity_id  from 
+phi_t_activity a 
+join PHI_T_REL_ACTIVITY_PROVIDER_ACTIVITY apa on a.activity_id = apa.provider_activity_id 
+join phi_t_activity a2 on a2.activity_id = apa.beneficiary_acivity_id
+;
+
+COMMIT;
+
+
+
+
+
+insert into PHI_T_REPORT_Z01_FINAL
+(
+SERVICE_IDENTIFIER_0005,SERVICE_TYPE_0010,UNIQUE_SERVICE_TITLE_BK_TAXO_0020,SERVICE_RECIPIENT_NAME_0030,SERVICE_RECIPIENT_CODE_0040,SERVICE_PROVIDER_ENTITY_NAME_0050,SERVICE_PROVIDER_ENTITY_CODE_0060,SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070,SERVICE_PROVIDER_PARENT_NAME_0080,SERVICE_PROVIDER_PARENT_CODE_0090,SERVICE_PROVIDER_PARENT_CODE_TYPE_0100,SERVICE_PROVIDER_DELIVERY_0110,CRITICALITY_0120,CONTRACT_ID_0130,GOVERNING_LAW_0140,RESOLUTION_RESILIENCE_FEATURES_0150,RESOLUTION_RESILIENCE_BRP_0160,RESOLUTION_RESILIENCE_ALT_MIT_0170,CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180,ICT_SERVICE_UNDER_DORA_0190
+)
+select distinct SERVICE_IDENTIFIER_0005,SERVICE_TYPE_0010,UNIQUE_SERVICE_TITLE_BK_TAXO_0020,SERVICE_RECIPIENT_NAME_0030,SERVICE_RECIPIENT_CODE_0040,SERVICE_PROVIDER_ENTITY_NAME_0050,SERVICE_PROVIDER_ENTITY_CODE_0060,SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070,SERVICE_PROVIDER_PARENT_NAME_0080,SERVICE_PROVIDER_PARENT_CODE_0090,SERVICE_PROVIDER_PARENT_CODE_TYPE_0100,SERVICE_PROVIDER_DELIVERY_0110,CRITICALITY_0120,CONTRACT_ID_0130,GOVERNING_LAW_0140,RESOLUTION_RESILIENCE_FEATURES_0150,RESOLUTION_RESILIENCE_BRP_0160,RESOLUTION_RESILIENCE_ALT_MIT_0170,CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180,ICT_SERVICE_UNDER_DORA_0190
+from PHI_v_REPORT_Z01_final_activity za
+--join phi_t_report_z01_filter_activity fa on za.SERVICE_IDENTIFIER_0005 = fa.activity_id
+where 
+exists (select 1 from  phi_t_report_z01_filter_activity fa where za.SERVICE_IDENTIFIER_0005 = fa.activity_id and type_relation='ACTIVITY')
+and not exists (select 1 from PHI_T_REPORT_Z01_FINAL z where 
+
+nvl(z.SERVICE_TYPE_0010,'ZzZ')                         = nvl(za.SERVICE_TYPE_0010,'ZzZ')                         
+and nvl(z.UNIQUE_SERVICE_TITLE_BK_TAXO_0020,'ZzZ')         = nvl(za.UNIQUE_SERVICE_TITLE_BK_TAXO_0020,'ZzZ') 
+and nvl(z.SERVICE_PROVIDER_ENTITY_CODE_0060,'ZzZ')         = nvl(za.SERVICE_PROVIDER_ENTITY_CODE_0060,'ZzZ')  
+and nvl(z.CONTRACT_ID_0130,'ZzZ')                          = nvl(za.CONTRACT_ID_0130,'ZzZ')
+)
+;
+
+
+
+
+insert into PHI_T_REPORT_Z01_FINAL
+(
+SERVICE_IDENTIFIER_0005,SERVICE_TYPE_0010,UNIQUE_SERVICE_TITLE_BK_TAXO_0020,SERVICE_RECIPIENT_NAME_0030,SERVICE_RECIPIENT_CODE_0040,SERVICE_PROVIDER_ENTITY_NAME_0050,SERVICE_PROVIDER_ENTITY_CODE_0060,SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070,SERVICE_PROVIDER_PARENT_NAME_0080,SERVICE_PROVIDER_PARENT_CODE_0090,SERVICE_PROVIDER_PARENT_CODE_TYPE_0100,SERVICE_PROVIDER_DELIVERY_0110,CRITICALITY_0120,CONTRACT_ID_0130,GOVERNING_LAW_0140,RESOLUTION_RESILIENCE_FEATURES_0150,RESOLUTION_RESILIENCE_BRP_0160,RESOLUTION_RESILIENCE_ALT_MIT_0170,CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180,ICT_SERVICE_UNDER_DORA_0190
+)
+select distinct SERVICE_IDENTIFIER_0005,SERVICE_TYPE_0010,UNIQUE_SERVICE_TITLE_BK_TAXO_0020,SERVICE_RECIPIENT_NAME_0030,SERVICE_RECIPIENT_CODE_0040,SERVICE_PROVIDER_ENTITY_NAME_0050,SERVICE_PROVIDER_ENTITY_CODE_0060,SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070,SERVICE_PROVIDER_PARENT_NAME_0080,SERVICE_PROVIDER_PARENT_CODE_0090,SERVICE_PROVIDER_PARENT_CODE_TYPE_0100,SERVICE_PROVIDER_DELIVERY_0110,CRITICALITY_0120,CONTRACT_ID_0130,GOVERNING_LAW_0140,RESOLUTION_RESILIENCE_FEATURES_0150,RESOLUTION_RESILIENCE_BRP_0160,RESOLUTION_RESILIENCE_ALT_MIT_0170,CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180,ICT_SERVICE_UNDER_DORA_0190
+from PHI_v_REPORT_Z01_final_prestation zp
+
+where 
+exists (select 1 from  phi_t_report_z01_filter_activity fa where zp.SERVICE_IDENTIFIER_0005 = fa.activity_id and type_relation='ACTIVITY')
+and exists (select 1 from  phi_t_report_z01_filter_activity fa where zp.SERVICE_IDENTIFIER_0005 = fa.activity_id and type_relation='PRESTATION')
+and not exists (select 1 from PHI_T_REPORT_Z01_FINAL z where 
+
+nvl(z.SERVICE_TYPE_0010,'ZzZ')                             = nvl(zp.SERVICE_TYPE_0010,'ZzZ')                         
+and nvl(z.UNIQUE_SERVICE_TITLE_BK_TAXO_0020,'ZzZ')         = nvl(zp.UNIQUE_SERVICE_TITLE_BK_TAXO_0020,'ZzZ') 
+and nvl(z.SERVICE_PROVIDER_ENTITY_CODE_0060,'ZzZ')         = nvl(zp.SERVICE_PROVIDER_ENTITY_CODE_0060,'ZzZ')  
+and nvl(z.CONTRACT_ID_0130,'ZzZ')                          = nvl(zp.CONTRACT_ID_0130,'ZzZ')
+)
+;
+
+commit;
+
+
+
+
+
+end prestation_work;
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+PROCEDURE main_z01 is 
+begin 
+truncate_work ();
+prestation_work();
+end main_z01;
+------------------------------------------------------------------------------------------------------------------
+
+end P_report_Z01;
