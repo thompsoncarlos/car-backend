@@ -1,4 +1,4 @@
-package fr.bpce.car.service.activity;
+package car_backend.service.activity;
 
 public interface ActivityFileService {
 

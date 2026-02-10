@@ -1,6 +1,6 @@
-package fr.bpce.car.service.reports;
+package car_backend.service.reports;
 
-import fr.bpce.car.model.reports.ReportZ04;
+import car_backend.model.reports.ReportZ04;
 
 import java.util.List;
 

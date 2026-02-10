@@ -1,7 +1,7 @@
-package fr.bpce.car.model.dao.relations;
+package car_backend.model.dao.relations;
 
-import fr.bpce.car.model.dao.Activity;
-import fr.bpce.car.model.dao.Person;
+import car_backend.model.dao.Activity;
+import car_backend.model.dao.Person;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

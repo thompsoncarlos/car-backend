@@ -1,6 +1,6 @@
-package fr.bpce.car.service.activity;
+package car_backend.service.activity;
 
-import fr.bpce.car.repository.ActivityFileRepository;
+import car_backend.repository.ActivityFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

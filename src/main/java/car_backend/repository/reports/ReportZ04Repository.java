@@ -1,6 +1,6 @@
 package car_backend.repository.reports;
 
-import car_backend.model.excel.ReportZ04;
+import car_backend.model.reports.ReportZ04;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

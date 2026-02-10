@@ -1,7 +1,7 @@
-package fr.bpce.car.service.reports;
+package car_backend.service.reports;
 
-import fr.bpce.car.model.reports.ReportZ01;
-import fr.bpce.car.repository.reports.ReportZ01Repository;
+import car_backend.model.reports.ReportZ01;
+import car_backend.repository.reports.ReportZ01Repository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
