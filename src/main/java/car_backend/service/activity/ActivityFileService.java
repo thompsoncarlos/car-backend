@@ -1,9 +1,6 @@
-package car_backend.service.activity;
-
-import car_backend.model.excel.RelevantServicesReport;
-
-import java.util.List;
+package fr.bpce.car.service.activity;
 
 public interface ActivityFileService {
+
 
 }

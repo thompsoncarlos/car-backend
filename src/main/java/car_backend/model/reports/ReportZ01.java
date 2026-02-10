@@ -1,4 +1,4 @@
-package car_backend.model.excel;
+package car_backend.model.reports;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

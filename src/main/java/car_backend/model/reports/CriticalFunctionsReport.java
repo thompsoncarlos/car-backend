@@ -1,12 +1,12 @@
-package car_backend.model.excel;
+package car_backend.model.reports;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusinessLinesReport extends BaseFields{
+public class CriticalFunctionsReport extends BaseFields {
 
-    private String name;
+    private String country;
     private String id;
 }

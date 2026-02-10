@@ -36,7 +36,4 @@ public interface ReportZ04Repository extends JpaRepository<ReportZ04, String> {
                 a.ACTIVITY_ID
             """, nativeQuery = true)
     List<Object[]> generateReportData();
-
-    @Procedure(name = "P_REPORT_Z04.MAIN_Z04")
-    void executeReportProcedure();
 }

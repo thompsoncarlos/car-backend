@@ -1,4 +1,4 @@
-package car_backend.model.excel;
+package car_backend.model.reports;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
