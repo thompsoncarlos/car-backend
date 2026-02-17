@@ -16,35 +16,23 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_REF_EBA_ECONOMIC_FUNCTIONS")
+@Table(name = "PHI_T_EBA_ECO_FUNCTION")
 public class EbaEconomicFunction {
 
     @Id
-    @Column(name = "ID_TECH_LINE")
-    private Long techLineId;
+    @Column(name = "EBA_ECO_FUNCTION_ID", nullable = false)
+    private String ebaEcoFunctionId;
 
-    @Column(name = "REF")
-    private String ref;
+    @Column(name = "EBA_FUNCTION_LABEL")
+    private String ebaFunctionLabel;
 
-    @Column(name = "FONCTION_FRANCAIS")
-    private String frenchFunction;
+    @Column(name = "EBA_CODE")
+    private String ebaCode;
 
-    @Column(name = "SOUS_FONCTIONS_FRANCAIS")
-    private String frenchSubfunction;
+    @Column(name = "CRITICAL")
+    private String critical;
 
-    @Column(name = "FUNCTION_ENGLISH")
-    private String englishFunction;
-
-    @Column(name = "SUB_FUNCTIONSS_ENGLISH")
-    private String englishSubfunction;
-
-    @Column(name = "ROW_UPDATE_DATE")
-    private LocalDateTime updateDateRow;
-
-    @Column(name = "SQLLDR_LOAD_ID")
-    private String sqlLoadId;
-
-    @Column(name = "VIRTUAL_ROWID")
-    private String virtualRowId;
+    @Column(name = "CRITICAL_ESSENTIEL")
+    private String criticalEssential;
 
 }

@@ -1,15 +1,16 @@
 package car_backend.model.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import car_backend.model.dao.refs.OrganizationalUnitRef;
+import car_backend.model.dao.relations.ActivityPersonRel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -94,5 +95,49 @@ public class Activity {
 
     @Column(name = "SOURCE")
     private String source;
+
+     @Column(name = "ACTIVITY_TYPE_ID")
+    private String activityTypeId;
+
+    @Column(name = "CRITICAL_ESSENTIAL")
+    private String criticalEssential;
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_ACTIVITY_ACTIVITY_TYPE",
+            joinColumns = @JoinColumn(name = "ACTIVITY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ACTIVITY_TYPE_ID")
+    )
+    private Set<ActivityType> assignedActivityTypes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_ACTIVITY_APPLICATION",
+            joinColumns = @JoinColumn(name = "ACTIVITY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "APPLICATION_ID")
+    )
+    private Set<Application> assignedApplications = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_ACTIVITY_ENTITY",
+            joinColumns = @JoinColumn(name = "ACTIVITY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LEGAL_ENTITY_ID")
+    )
+    private Set<LegalEntity> assignedLegalEntities = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_ACTIVITY_TRADEMARK",
+            joinColumns = @JoinColumn(name = "ACTIVITY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TRADEMARK_ID")
+    )
+    private Set<Trademark> assignedTrademarks = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_ACTIVITY_UO",
+            joinColumns = @JoinColumn(name = "ACTIVITY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ID_UO")
+    )
+    private Set<OrganizationalUnitRef> assignedUos = new HashSet<>();
+
+    @OneToMany(mappedBy = "assignedActivity", fetch = FetchType.LAZY)
+    private Set<ActivityPersonRel> personRelations = new HashSet<>();
 
 }

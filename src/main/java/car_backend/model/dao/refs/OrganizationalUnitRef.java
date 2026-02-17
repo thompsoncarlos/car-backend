@@ -1,26 +1,24 @@
 package car_backend.model.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import car_backend.model.dao.Person;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_T_REF_UO_INPUT_USER")
-public class OrganizationalUnit {
+@Table(name = "PHI_T_REF_UO")
+public class OrganizationalUnitRef {
 
     @Id
-    @Column(name = "ID_TECH_LINE")
-    private Long techLineId;
-
     @Column(name = "ID_UO")
     private String id;
 
@@ -32,4 +30,11 @@ public class OrganizationalUnit {
 
     @Column(name = "ID_ETABLISSEMENT")
     private String establishmentId;
+
+    @Column(name = "ID_TECH_LINE")
+    private Long techLineId;
+
+    @ManyToMany(mappedBy = "assignedUos")
+    private Set<Person> personSet = new HashSet<>();
+
 }

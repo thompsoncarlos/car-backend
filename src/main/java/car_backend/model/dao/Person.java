@@ -1,89 +1,82 @@
 package car_backend.model.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import car_backend.model.dao.refs.OrganizationalUnitRef;
+import car_backend.model.dao.relations.ActivityPersonRel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_T_REF_PERSON")
+@Table(name = "PHI_T_PERSON")
 public class Person {
 
     @Id
-    @Column(name = "ID_TECH_LINE")
-    private Long techLineId;
+    @Column(name = "PERSON_ID")
+    private String personId;
 
-    @Column(name = "PERSON_LABEL")
-    private String personLabel;
-
-    @Column(name = "COLONNE1")
-    private String column1;
-
-    @Column(name = "Y78_NOM")
-    private String surname;
-
-    @Column(name = "Y78_PRENOM")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "Y78_IMMEUBLECODE")
-    private String buildingCode;
+    @Column(name = "SURNAME")
+    private String surname;
 
-    @Column(name = "BZV_IMMEUBLEDESC")
-    private String buildingDescription;
+    @Column(name = "SUPERIOR_ID")
+    private String superiorId;
 
-    @Column(name = "Y78_CODEPAYS")
-    private String countryCode;
+    @Column(name = "COUNTRY_FR")
+    private String countryFr;
 
-    @Column(name = "Y78_FONCTIONEN")
-    private String function;
+    @Column(name = "COUNTRY_EN")
+    private String countryEn;
 
-    @Column(name = "Y78_HIERARCHIQUEIUP")
-    private String hierarchicalUp;
+    @Column(name = "CITY")
+    private String city;
 
-    @Column(name = "Y78_HIERARCHIQUEPRENOM")
-    private String hierarchicalName;
+    @Column(name = "ROLE_ID")
+    private String roleId;
 
-    @Column(name = "Y78_HIERARCHIQUENOM")
-    private String hierarchicalSurname;
+    @Column(name = "ROLE_NAME")
+    private String roleName;
 
-    @Column(name = "Y78MVT_EMPLOYEURCODE")
-    private String employerCode;
+    @Column(name = "LABEL_ROLE_EN")
+    private String labelRoleEn;
 
-    @Column(name = "Y78MVT_EMPLOYEURDESC")
-    private String employerDescription;
+    @Column(name = "LABEL_ROLE_FR")
+    private String labelRoleFr;
 
-    @Column(name = "Y78MVT_CODEAFFJURI")
-    private String affJuriCode;
+    @Column(name = "UO_PERSON_ID")
+    private String uoPersonId;
 
-    @Column(name = "AFFJURIDESC")
-    private String affJuriDescription;
+    @Column(name = "PERSON_EMAIL")
+    private String personEmail;
 
-    @Column(name = "Y78MVT_UOCODE")
-    private String organizationalUnitCode;
+    @Column(name = "PERSON_PHONE_NUMBER")
+    private String personPhoneNumber;
 
-    @Column(name = "BZ8_DESCEN")
-    private String descen;
+    @Column(name = "TYPE_OF_CONTRACT")
+    private String typeOfContract;
 
-    @Column(name = "BZ8_LONGDESCEN")
-    private String longDescen;
+    @Column(name = "PERSON_STATUS")
+    private String personStatus;
 
-    @Column(name = "BZ8_POLEDESCEN")
-    private String poleDescen;
+    @Column(name = "BUILDING_ID")
+    private String buildingId;
 
-    @Column(name = "BZ8_POLESHORTDESCEN")
-    private String poleShortDescen;
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_PERSON_UO",
+            joinColumns = @JoinColumn(name = "PERSON_ID"),
+            inverseJoinColumns = @JoinColumn(name = "UO_ID"))
+    private Set<OrganizationalUnitRef> assignedUos = new HashSet<>();
 
-    @Column(name = "BZ8_POLELONGDESCEN")
-    private String poleLongDescen;
-
-    @Column(name = "Y78_EMPLOILIBELLER")
-    private String emploilibeller;
+    @OneToMany(mappedBy = "assignedPerson", fetch = FetchType.LAZY)
+    private Set<ActivityPersonRel> activityRelations = new HashSet<>();
 }

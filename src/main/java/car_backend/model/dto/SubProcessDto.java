@@ -11,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class SubProcessDto {
 
-    private List<String> macroBusinessLines;
-    private List<ActivityTypeDto> activityTypes;
-    private List<String> macroProcesses;
-    private List<String> processes;
-    private List<String> subProcesses;
+    private String macroBusinessLines;
+    private String activityTypes;
+    private String macroProcesses;
+    private String processes;
+    private String subProcesses;
+
 }
