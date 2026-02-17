@@ -1,6 +1,9 @@
 package car_backend.model.reports;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +19,15 @@ public class ReportZ05 {
 
     @Id
     @Column(name = "SERVICE_IDENTIFIER_0005")
-    private String serviceIdentifier;
+    private String serviceId;
 
     @Column(name = "SERVICE_TYPE_0010")
     private String serviceType;
 
     @Column(name = "UNIQUE_SERVICE_TITLE_BK_TAXO_0020")
-    private String uniqueServiceTitle;
+    private String serviceUniqueLabel;
 
-    @Column(name = "CORE_BUSINESS_LINE_NAME_0030");
+    @Column(name = "CORE_BUSINESS_LINE_NAME_0030")
     private String coreBusinessLineName;
 
     @Column(name = "CORE_BUSINESS_LINE_ID_0040")
