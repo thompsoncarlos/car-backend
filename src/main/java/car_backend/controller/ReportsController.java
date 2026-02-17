@@ -1,8 +1,10 @@
 package car_backend.controller;
 
 import car_backend.model.enums.ReportFilesInformation;
+import car_backend.service.reports.ReportZ04Service;
 import car_backend.service.reports.ReportZ01Service;
 import car_backend.utils.reports.ReportsExcelBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class ReportsController {
     @Autowired
     ReportZ01Service reportZ01Service;
 
+    @Autowired
+    ReportZ04Service reportZ04Service;
+
     private final ReportsExcelBuilder excelBuilder;
 
     public ReportsController(ReportsExcelBuilder excelBuilder) {
@@ -32,22 +37,40 @@ public class ReportsController {
     }
 
     @GetMapping("/z01")
-    public ResponseEntity<byte[]> downloadActivitiesReport() {
+    public ResponseEntity<byte[]> downloadZ01Report() {
         try {
-            byte[] bytes = excelBuilder.buildReport(reportZ01Service.getReport());
+            byte[] bytes = reportZ01Service.generateZ01ReportExcel();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z01.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.Z01.getNamePrefix() + datetime
-                    + ReportFilesInformation.Z01.getExtension();
+            String filename = ReportFilesInformation.Z01.getNamePrefix() + datetime + ReportFilesInformation.Z01.getExtension();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            ReportFilesInformation.Z01.getAttachment() + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.Z01.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z01.getExcelMediaType()))
                     .body(bytes);
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            log.error("Error generating contract report", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
+        }
+    }
+
+    @GetMapping("/z04")
+    public ResponseEntity<byte[]> downloadZ04Report() {
+        try {
+            byte[] bytes = reportZ01Service.generateZ04ReportExcel();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z04.getDateMask());
+            String datetime = LocalDateTime.now().format(formatter);
+            String filename = ReportFilesInformation.Z04.getNamePrefix() + datetime + ReportFilesInformation.Z04.getExtension();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.Z04.getAttachment() + filename + "\"")
+                    .contentType(MediaType.parseMediaType(ReportFilesInformation.Z04.getExcelMediaType()))
+                    .body(bytes);
+        } catch (Exception e) {
+            log.error("Error generating contract report", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
         }
     }
 }
