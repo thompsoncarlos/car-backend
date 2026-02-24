@@ -1,8 +1,8 @@
 package car_backend.adapter;
 
-import fr.bpce.car.model.dao.refs.OrganizationalUnitRef;
-import fr.bpce.car.model.dto.OrganizationalUnitDto;
-import fr.bpce.car.model.dto.OrganizationalUnitsDto;
+import car_backend.model.dao.refs.OrganizationalUnitRef;
+import car_backend.model.dto.OrganizationalUnitDto;
+import car_backend.model.dto.OrganizationalUnitsDto;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package car_backend.model.dao;
+package car_backend.model.dao.refs;
 
 import car_backend.model.dao.Person;
 import jakarta.persistence.*;
