@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "PHI_T_FILES_ACTIVITY")
 public class ActivityFile {
 
-     @Id
+    @Id
     @Column(name = "ID_TECH_LINE")
     private Long techLineId;
 

@@ -1,15 +1,15 @@
 package car_backend.service.reports;
 
 import car_backend.model.reports.ContractReport;
-import car_backend.model.reports.ReportZ01;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface ReportZ01Service {
+public interface ReportContractService {
 
-    List<ReportZ01> getReport();
+    List<ContractReport> getReport();
 
-    byte[] generateZ01ReportExcel();
+    byte[] generateContractReportExcel();
 
 }
