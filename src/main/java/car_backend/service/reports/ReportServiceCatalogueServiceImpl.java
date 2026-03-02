@@ -35,7 +35,8 @@ public class ReportServiceCatalogueServiceImpl implements ReportServiceCatalogue
     public byte[] generateServiceCatalogueReportExcel() {
         try {
             List<ReportServiceCatalogue> reports = getReport();
-            return excelBuilder.buildGenericReport(reports, "templates/report_service_catalogue.xlsx", 24, this::writeServiceCatalogueReport);
+            return excelBuilder.buildGenericReport(reports, "templates/report_service_catalogue.xlsx", 24,
+                    this::writeServiceCatalogueReport);
         } catch (IOException e) {
             log.error("Error generating Service Catalogue excel", e);
             throw new RuntimeException("Failed to generate Service Catalogue report", e);
