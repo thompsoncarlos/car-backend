@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface ReportZ05Service {
 
-    List<ReportZ05> generateReportZ05();
+    List<ReportZ05> getReport();
+
+    byte[] generateZ05ReportExcel();
+
 }

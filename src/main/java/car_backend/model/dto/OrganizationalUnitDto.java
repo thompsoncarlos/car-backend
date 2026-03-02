@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrganizationalUnitDto {
 
-    private String Id;
+    private String id;
 
-    private String Name;
+    private String name;
 
     private String uoResponsible;
 }

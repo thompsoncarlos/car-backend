@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Slf4j
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -65,15 +66,12 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<ActivityDetailsDto> getActivities() {
-        try {
-            List<Activity> activities = repository.findAll();
-            if (activities.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "List of Activities is Empty.");
-            }
-            return ActivityAdapter.adaptToDtoList(activities);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        List<Activity> activities = repository.findAll();
+        if (activities.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "List of Activities is Empty.");
         }
+        return ActivityAdapter.adaptToDtoList(activities);
+
     }
 
     @Override

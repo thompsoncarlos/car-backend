@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "PHI_T_FILES_ACTIVITY_APPLICATION")
 public class ActivityApplication {
- @Id
+
+    @Id
     @Column(name = "ID_TECH_LINE")
     private Long techLineId;
 

@@ -28,7 +28,7 @@ public class ActivityInput {
     private String status;
 
     @Column(name = "VERSION_ACTIVITY")
-    private String activityVersion;
+    private Long activityVersion;
 
     @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;

@@ -1,7 +1,7 @@
 package car_backend.service;
 
 import car_backend.adapter.OrganizationalUnitAdapter;
-import car_backend.model.dao.OrganizationalUnit;
+import car_backend.model.dao.refs.OrganizationalUnitRef;
 import car_backend.model.dto.OrganizationalUnitDto;
 import car_backend.model.dto.OrganizationalUnitsDto;
 import car_backend.repository.OrganizationalUnitRepository;
@@ -29,13 +29,13 @@ public class OrganizationalUnitServiceImpl implements OrganizationalUnitService 
 
     @Override
     public OrganizationalUnitDto getByFrenchLabel(String uoFrenchLabel) {
-        OrganizationalUnit uoEntity = uoRepository.findByFrenchLabel(uoFrenchLabel).orElseThrow();
+        OrganizationalUnitRef uoEntity = uoRepository.findByFrenchLabel(uoFrenchLabel).orElseThrow();
         return OrganizationalUnitAdapter.adaptToDto(uoEntity);
     }
 
     @Override
     public OrganizationalUnitDto getById(String id) {
-        OrganizationalUnit uoEntity = uoRepository.findById(id).orElseThrow();
+        OrganizationalUnitRef uoEntity = uoRepository.findById(id).orElseThrow();
         return OrganizationalUnitAdapter.adaptToDto(uoEntity);
     }
 }

@@ -1,6 +1,5 @@
 package car_backend.utils.reports;
 
-import car_backend.model.reports.ReportZ01;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,79 +21,94 @@ import java.util.List;
 @Service
 public class ReportsExcelBuilder {
 
+    private static final String NULL_VALUE_PLACEHOLDER = "#UNV";
+
     private CellStyle dateStyle;
     private CellStyle headerStyle;
 
-    public byte[] buildReport(List<ReportZ01> servicesReportList) throws IOException {
-
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("templates/report_Z01.xlsx")) {
-            if (inputStream == null) {
-                log.error("Template File Not Found");
-                throw new IOException(HttpStatus.INTERNAL_SERVER_ERROR.toString());
-            }
+    public <T> byte[] buildGenericReport(List<T> reportList, String templatePath, int startingRow, ReportWriter<T> reportWriter) throws IOException {
+        try (InputStream inputStream = getTemplateStream(templatePath)) {
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-            writeRelevantServices(workbook.getSheetAt(0), servicesReportList);
+            initializeStyles(workbook);
+            writeGenericReports(workbook.getSheetAt(0), reportList, startingRow, reportWriter);
             return workbookToBytes(workbook);
         }
     }
 
-    private void writeRelevantServices(XSSFSheet serviceSheet, List<ReportZ01> services) {
-
-        int rowCount = 5;
-        for (ReportZ01 relevantService : services) {
-            Row row = serviceSheet.createRow(rowCount++);
-            writeRelevantService(relevantService, row);
+    private InputStream getTemplateStream(String templatePath) throws IOException {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(templatePath);
+        if (inputStream == null) {
+            log.error("Template file not found: {}", templatePath);
+            throw new IOException(HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
-
+        return inputStream;
     }
 
-    private void writeRelevantService(ReportZ01 report, Row row) {
-        int cellCount = 1;
-        fillCellWithString(report.getServiceId(), row, cellCount++);
-        fillCellWithString(report.getServiceType(), row, cellCount++);
-        fillCellWithString(report.getServiceUniqueLabel(), row, cellCount++);
-        fillCellWithString(report.getServiceRecipientName(), row, cellCount++);
-        fillCellWithString(report.getServiceRecipientCode(), row, cellCount++);
-        fillCellWithString(report.getServiceProviderEntityName(), row, cellCount++);
-        fillCellWithString(report.getServiceProviderEntityCode(), row, cellCount);
+    private void initializeStyles(XSSFWorkbook workbook) {
+        dateStyle = workbook.createCellStyle();
+        dateStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("yyyy-MM-dd"));
+        headerStyle = workbook.createCellStyle();
     }
 
-    private void fillCellWithString(String value, Row row, int cellCount) {
+    private <T> void writeGenericReports(XSSFSheet sheet, List<T> reports, int startingRow, ReportWriter<T> reportWriter) {
+        int rowCount = startingRow;
+        for (T report : reports) {
+            Row row = sheet.createRow(rowCount++);
+            reportWriter.writeReport(report, row);
+        }
+    }
+
+    public void fillCellWithString(String value, Row row, int cellCount) {
         Cell cell = row.createCell(cellCount);
-        String cellValue = value == null ? "" : value;
+        String cellValue = (value == null || value.trim().isEmpty()) ? NULL_VALUE_PLACEHOLDER : value;
         cell.setCellValue(cellValue);
     }
 
-    private void fillCellWithInteger(Integer value, Row row, int cellCount) {
+    public void fillCellWithInteger(Integer value, Row row, int cellCount) {
         Cell cell = row.createCell(cellCount);
         if (value != null) {
             cell.setCellValue(value);
+        } else {
+            cell.setCellValue(NULL_VALUE_PLACEHOLDER);
         }
     }
 
-    private void fillCellWithDouble(Double value, Row row, int cellCount) {
+    public void fillCellWithDouble(Double value, Row row, int cellCount) {
         Cell cell = row.createCell(cellCount);
         if (value != null) {
             cell.setCellValue(value);
+        } else {
+            cell.setCellValue(NULL_VALUE_PLACEHOLDER);
         }
     }
 
-    private void fillCellWithDate(LocalDateTime date, Row row, int cellCount) {
+    public void fillCellWithDate(LocalDateTime date, Row row, int cellCount) {
         Cell cell = row.createCell(cellCount);
         if (date != null) {
             cell.setCellValue(date.toString());
+            if (dateStyle != null) {
+                cell.setCellStyle(dateStyle);
+            }
+        } else {
+            cell.setCellValue(NULL_VALUE_PLACEHOLDER);
         }
-        cell.setCellStyle(dateStyle);
+    }
+
+    public void fillCellWithLocalDate(LocalDate date, Row row, int cellCount) {
+        Cell cell = row.createCell(cellCount);
+        if (date != null) {
+            cell.setCellValue(date.toString());
+            if (dateStyle != null) {
+                cell.setCellStyle(dateStyle);
+            }
+        } else {
+            cell.setCellValue(NULL_VALUE_PLACEHOLDER);
+        }
     }
 
     private byte[] workbookToBytes(Workbook workbook) throws IOException {
-        byte[] bytes = null;
-        ByteArrayOutputStream bos = null;
-        bos = new ByteArrayOutputStream();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         workbook.write(bos);
-        bytes = bos.toByteArray();
-
-        return bytes;
+        return bos.toByteArray();
     }
-
 }

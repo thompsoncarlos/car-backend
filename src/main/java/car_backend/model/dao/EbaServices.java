@@ -1,49 +1,46 @@
 package car_backend.model.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_REF_EBA_SERVICES")
+@Table(name = "PHI_T_EBA_SERVICES")
 public class EbaServices {
 
     @Id
-    @Column(name = "ID_TECH_LINE")
-    private Long techLineId;
-
-    @Column(name = "REF")
-    private String ref;
+    @Column(name = "EBA_SERVICES_ID")
+    private String ebaServicesId;
 
     @Column(name = "SERVICE_FRANCAIS")
-    private String frenchService;
+    private String serviceFrancais;
 
     @Column(name = "SOUS_SERVICE_FRANCAIS")
-    private String frenchSubservice;
+    private String sousServiceFrancais;
 
     @Column(name = "SERVICE_ENGLISH")
-    private String englishService;
+    private String serviceEnglish;
 
     @Column(name = "SUB_SERVICE_ENGLISH")
-    private String englishSubservice;
-
-    @Column(name = "ROW_UPDATE_DATE")
-    private LocalDateTime updateDateRow;
-
-    @Column(name = "SQLLDR_LOAD_ID")
-    private String sqlLoadId;
+    private String subServiceEnglish;
 
     @Column(name = "VIRTUAL_ROWID")
     private String virtualRowId;
+
+    @ManyToMany
+    @JoinTable(name = "PHI_T_REL_EBA_SERVICES_ACTIVITY_TYPE",
+            joinColumns = @JoinColumn(name = "EBA_SERVICES_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ACTIVITY_TYPE_ID")
+    )
+    private Set<ActivityType> assignedActivityTypes = new HashSet<>();
 }

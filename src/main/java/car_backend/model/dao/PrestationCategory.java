@@ -1,7 +1,9 @@
 package car_backend.model.dao;
 
-import car_backend.model.enums.OptionsEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +14,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PHI_REF_PRESTATION_CATEGORY")
+@Table(name = "PHI_T_PRESTATION_CATEGORY")
 public class PrestationCategory {
 
     @Id
-    @Column(name = "PRESTATION_TYPE_ID")
+    @Column(name = "ID_PRESTATION_CATEGORY")
     private Long prestationTypeId;
 
-    @Column(name = "PRESTATION_CATEGORY_LABEL")
+    @Column(name = "LABEL_PRESTATION_CATEGORY")
     private String prestationName;
 }

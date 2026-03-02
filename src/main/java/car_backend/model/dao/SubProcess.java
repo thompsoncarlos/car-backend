@@ -1,5 +1,6 @@
 package car_backend.model.dao;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,27 +21,13 @@ import java.time.LocalDateTime;
 public class SubProcess {
 
     @Id
-    @Column(name = "ID_TECH_LINE")
-    private Long techLineId;
-
     @Column(name = "SUB_PROCESS_ID")
     private String subProcessId;
-
-    @Column(name = "SUB_PROCESS_LABEL")
-    private String subProcessLabel;
 
     @Column(name = "PROCESS_ID")
     private String processId;
 
-    @Column(name = "PROCESS_LABEL")
-    private String processLabel;
+    @Column(name = "LABEL")
+    private String label;
 
-    @Column(name = "ROW_UPDATE_DATE")
-    private LocalDateTime updateDateRow;
-
-    @Column(name = "SQLLDR_LOAD_ID")
-    private String sqlLoadId;
-
-    @Column(name = "VIRTUAL_ROWID")
-    private String virtualRowId;
 }

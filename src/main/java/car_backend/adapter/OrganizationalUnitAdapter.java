@@ -1,6 +1,6 @@
 package car_backend.adapter;
 
-import car_backend.model.dao.OrganizationalUnit;
+import car_backend.model.dao.refs.OrganizationalUnitRef;
 import car_backend.model.dto.OrganizationalUnitDto;
 import car_backend.model.dto.OrganizationalUnitsDto;
 
@@ -9,18 +9,18 @@ import java.util.List;
 
 public class OrganizationalUnitAdapter {
 
-   private OrganizationalUnitAdapter() {}
+    private OrganizationalUnitAdapter() {}
 
-    public static OrganizationalUnitsDto adaptToDtoList(List<OrganizationalUnit> organizationalUnits) {
+    public static OrganizationalUnitsDto adaptToDtoList(List<OrganizationalUnitRef> organizationalUnits) {
         OrganizationalUnitsDto organizationalUnitsDto = new OrganizationalUnitsDto();
         organizationalUnitsDto.setOrganizationalUnitList(adaptToList(organizationalUnits));
         return organizationalUnitsDto;
 
     }
 
-    private static List<OrganizationalUnitDto> adaptToList(List<OrganizationalUnit> organizationalUnits) {
+    private static List<OrganizationalUnitDto> adaptToList(List<OrganizationalUnitRef> organizationalUnits) {
         List<OrganizationalUnitDto> result = new ArrayList<>();
-        for (OrganizationalUnit uo : organizationalUnits) {
+        for (OrganizationalUnitRef uo : organizationalUnits) {
             OrganizationalUnitDto unitDto = new OrganizationalUnitDto();
             unitDto.setId(uo.getId());
             unitDto.setName(uo.getFrenchLabel());
@@ -29,7 +29,7 @@ public class OrganizationalUnitAdapter {
         return result;
     }
 
-    public static OrganizationalUnitDto adaptToDto(OrganizationalUnit organizationalUnit) {
+    public static OrganizationalUnitDto adaptToDto(OrganizationalUnitRef organizationalUnit) {
         OrganizationalUnitDto uo = new OrganizationalUnitDto();
         uo.setId(organizationalUnit.getId());
         uo.setName(organizationalUnit.getFrenchLabel());

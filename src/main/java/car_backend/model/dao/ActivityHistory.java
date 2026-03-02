@@ -1,9 +1,6 @@
 package car_backend.model.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,7 @@ import java.time.LocalDateTime;
 public class ActivityHistory {
 
     @Id
-    @Column(name = "ACTIVITY_ID")
+    @Column(name = "ID_ACTIVITY")
     private Long activityId;
 
     @Column(name = "ACTIVITY_LABEL")
@@ -33,8 +30,9 @@ public class ActivityHistory {
     private String status;
 
     @Column(name = "VERSION_ACTIVITY")
-    private String activityVersion;
+    private Long activityVersion;
 
     @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
+
 }
