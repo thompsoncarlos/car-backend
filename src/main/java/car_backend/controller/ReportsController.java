@@ -3,6 +3,7 @@ package car_backend.controller;
 import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ContractReport;
 import car_backend.service.reports.ReportContractService;
+import car_backend.service.reports.ReportServiceCatalogueService;
 import car_backend.service.reports.ReportZ01Service;
 import car_backend.service.reports.ReportZ04Service;
 import car_backend.service.reports.ReportZ05Service;
@@ -36,6 +37,9 @@ public class ReportsController {
 
     @Autowired
     ReportZ05Service reportZ05Service;
+
+    @Autowired
+    ReportServiceCatalogueService reportServiceCatalogueService;
 
     @Autowired
     ReportContractService reportContractService;
@@ -118,6 +122,25 @@ public class ReportsController {
                     .body(bytes);
         } catch (Exception e) {
             log.error("Error generating Z05 report", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
+        }
+    }
+
+    @GetMapping("/service-catalogue")
+    public ResponseEntity<byte[]> downloadServiceCatalogueReport() {
+        try {
+            byte[] bytes = reportServiceCatalogueService.generateServiceCatalogueReportExcel();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.SERVICE_CATALOGUE.getDateMask());
+            String datetime = LocalDateTime.now().format(formatter);
+            String filename = ReportFilesInformation.SERVICE_CATALOGUE.getNamePrefix() + datetime + ReportFilesInformation.SERVICE_CATALOGUE.getExtension();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.SERVICE_CATALOGUE.getAttachment() + filename + "\"")
+                    .contentType(MediaType.parseMediaType(ReportFilesInformation.SERVICE_CATALOGUE.getExcelMediaType()))
+                    .body(bytes);
+        } catch (Exception e) {
+            log.error("Error generating Service Catalogue report", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
         }
     }
