@@ -30,9 +30,9 @@ INSERT INTO PHI_T_REPORT_SERVICE_CATALOGUE (
         PROCESS_0180,
         SUB_PROCESS_0190,
         ACTIVITY_CATEGORY_0200,
-        IS_BLOKING_0210
+        IS_BLOCKING_0210
     )
-SELECT DISTINCT
+SELECT 
     a.activity_id AS SERVICE_IDENTIFIER_0005,
     COALESCE(es.EBA_SERVICES_ID, '#UNV') AS SERVICE_TYPE_0010,
     CASE 
@@ -42,8 +42,8 @@ SELECT DISTINCT
     COALESCE(a.ACTIVITY_DESCRIPTION, '#UNV') AS SERVICE_DESCRIPTION_0020,
     COALESCE(
     CASE 
-        WHEN a.ACTIVITY_ID IS NOT NULL THEN le.legal_entity_label -- PROVIDER
-        ELSE sup.SUPPLIER_LABEL -- SUPPLIER
+        WHEN sup.SUPPLIER_ID IS NOT NULL THEN sup.SUPPLIER_LABEL -- SUPPLIER (Provider)
+        ELSE COALESCE(le.legal_entity_label, '#UNV')
     END,
         '#UNV'
     ) AS SERVICE_PROVIDER_ENTITY_NAME_0030,
@@ -52,39 +52,27 @@ SELECT DISTINCT
     ) AS SERVICE_PROVIDER_ENTITY_DEPARTMENT_NAME_0040,
     COALESCE(
         CASE 
-          WHEN a.ACTIVITY_ID IS NOT NULL THEN 
-            COALESCE(
-              le.LEI_CODE,
-              le.CRN_CODE,
-              le.SIREN_CODE
-            )
-          ELSE 
+          WHEN sup.SUPPLIER_ID IS NOT NULL THEN 
             COALESCE(
               sup.LEI_SUPPLIER_CODE,
               sup.CRN_SUPPLIER,
               sup.SIREN_SIRET_SUPPLIER_CODE
             )
+          ELSE 
+            uo.id_uo
         END,
         '#UNV'
       ) AS SERVICE_PROVIDER_ENTITY_CODE_0050,
-      COALESCE(
-      CASE
-        WHEN a.ACTIVITY_ID IS NOT NULL THEN le.legal_entity_label -- PROVIDER
-      END,
-      '#UNV'
-    ) AS SERVICE_RECIPIENT_ENTITY_NAME_0060,
+      COALESCE(le.legal_entity_label, '#UNV') AS SERVICE_RECIPIENT_ENTITY_NAME_0060,
      COALESCE(
-     CASE 
-        WHEN a.ACTIVITY_ID IS NOT NULL THEN -- PROVIDER
-          COALESCE(
+      COALESCE(
               le.LEI_CODE,
               le.CRN_CODE,
               le.SIREN_CODE
-          )
-        END,
+          ),
         '#UNV'
     ) AS SERVICE_RECIPIENT_ENTITY_CODE_0070,
-    COALESCE(le.regulated,'#UNV') AS DELIVERY_MODEL_0080,
+    COALESCE(c.delivery_model,'#UNV') AS DELIVERY_MODEL_0080,
     COALESCE(eef.eba_eco_function_id,'#UNV') AS CRITICAL_FUNCTION_ID_0090, 
     COALESCE(ebl.CORE_BUSINESS_LINE_ID, '#UNV') AS CORE_BUSINESS_LINE_0100,
     COALESCE(c.SUBSTITUTABILITY, '#UNV') AS SUBSTITUTABILITY_0110,
