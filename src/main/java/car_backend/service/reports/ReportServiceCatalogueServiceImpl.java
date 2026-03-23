@@ -1,6 +1,6 @@
 package car_backend.service.reports;
 
-import car_backend.model.reports.ReportServiceCatalogue;
+import car_backend.model.reports.ServiceCatalogueReport;
 import car_backend.repository.reports.ReportServiceCatalogueRepository;
 import car_backend.utils.reports.ReportsExcelBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -22,21 +22,9 @@ public class ReportServiceCatalogueServiceImpl implements ReportServiceCatalogue
     ReportsExcelBuilder excelBuilder;
 
     @Override
-    public List<ReportServiceCatalogue> getReport() {
-
-        reportServiceCatalogueRepository.truncateReportTable();
-
-        reportServiceCatalogueRepository.insertReportTable();
-
-        List<ReportServiceCatalogue> reports = reportServiceCatalogueRepository.findAll();
-        log.info("Service Catalogue report generated with {} records", reports.size());
-        return reports;
-    }
-
-    @Override
     public byte[] generateServiceCatalogueReportExcel() {
         try {
-            List<ReportServiceCatalogue> reports = getReport();
+            List<ServiceCatalogueReport> reports = getReport();
             return excelBuilder.buildGenericReport(reports, "templates/report_service_catalogue.xlsx", 24,
                     this::writeServiceCatalogueReport);
         } catch (IOException e) {
@@ -45,7 +33,12 @@ public class ReportServiceCatalogueServiceImpl implements ReportServiceCatalogue
         }
     }
 
-    private void writeServiceCatalogueReport(ReportServiceCatalogue report, Row row) {
+    private List<ServiceCatalogueReport> getReport() {
+        reportServiceCatalogueRepository.executeServiceCatalogueReport();
+        return reportServiceCatalogueRepository.findAll();
+    }
+
+    private void writeServiceCatalogueReport(ServiceCatalogueReport report, Row row) {
         int cellCount = 1;
 
         excelBuilder.fillCellWithString(report.getServiceIdentifier(), row, cellCount++); // SERVICE_IDENTIFIER_0005

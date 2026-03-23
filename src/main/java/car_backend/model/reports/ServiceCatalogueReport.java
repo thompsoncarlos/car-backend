@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "PHI_T_REPORT_SERVICE_CATALOGUE")
-public class ReportServiceCatalogue {
+public class ServiceCatalogueReport {
 
     @Id
     @Column(name = "SERVICE_IDENTIFIER_0005")
