@@ -1,8 +1,8 @@
 package car_backend.service.reports;
 
-import car_backend.car.model.reports.ReportZ04;
-import car_backend.car.repository.reports.ReportZ04Repository;
-import car_backend.car.utils.reports.ReportsExcelBuilder;
+import car_backend.model.reports.ReportZ04;
+import car_backend.repository.reports.ReportZ04Repository;
+import car_backend.utils.reports.ReportsExcelBuilder;
 import jakarta.persistence.Column;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;

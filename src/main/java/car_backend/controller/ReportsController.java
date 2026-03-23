@@ -3,6 +3,7 @@ package car_backend.controller;
 import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ContractReport;
 import car_backend.service.reports.ReportContractService;
+import car_backend.service.reports.ReportServiceCatalogueService;
 import car_backend.service.reports.ReportZ01Service;
 import car_backend.service.reports.ReportZ04Service;
 import car_backend.service.reports.ReportZ05Service;
@@ -38,6 +39,9 @@ public class ReportsController {
     ReportZ05Service reportZ05Service;
 
     @Autowired
+    ReportServiceCatalogueService reportServiceCatalogueService;
+
+    @Autowired
     ReportContractService reportContractService;
 
     private final ReportsExcelBuilder excelBuilder;
@@ -53,10 +57,12 @@ public class ReportsController {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z01.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.Z01.getNamePrefix() + datetime + ReportFilesInformation.Z01.getExtension();
+            String filename = ReportFilesInformation.Z01.getNamePrefix() + datetime
+                    + ReportFilesInformation.Z01.getExtension();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.Z01.getAttachment() + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.Z01.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z01.getExcelMediaType()))
                     .body(bytes);
         } catch (Exception e) {
@@ -70,13 +76,17 @@ public class ReportsController {
         try {
             byte[] bytes = reportContractService.generateContractReportExcel();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.CONTRACT_REPOSITORY.getDateMask());
+            DateTimeFormatter formatter = DateTimeFormatter
+                    .ofPattern(ReportFilesInformation.CONTRACT_REPOSITORY.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.CONTRACT_REPOSITORY.getNamePrefix() + datetime + ReportFilesInformation.CONTRACT_REPOSITORY.getExtension();
+            String filename = ReportFilesInformation.CONTRACT_REPOSITORY.getNamePrefix() + datetime
+                    + ReportFilesInformation.CONTRACT_REPOSITORY.getExtension();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.CONTRACT_REPOSITORY.getAttachment() + filename + "\"")
-                    .contentType(MediaType.parseMediaType(ReportFilesInformation.CONTRACT_REPOSITORY.getExcelMediaType()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.CONTRACT_REPOSITORY.getAttachment() + filename + "\"")
+                    .contentType(
+                            MediaType.parseMediaType(ReportFilesInformation.CONTRACT_REPOSITORY.getExcelMediaType()))
                     .body(bytes);
         } catch (Exception e) {
             log.error("Error generating contract report", e);
@@ -91,10 +101,12 @@ public class ReportsController {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z04.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.Z04.getNamePrefix() + datetime + ReportFilesInformation.Z04.getExtension();
+            String filename = ReportFilesInformation.Z04.getNamePrefix() + datetime
+                    + ReportFilesInformation.Z04.getExtension();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.Z04.getAttachment() + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.Z04.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z04.getExcelMediaType()))
                     .body(bytes);
         } catch (Exception e) {
@@ -110,14 +122,41 @@ public class ReportsController {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z05.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
-            String filename = ReportFilesInformation.Z05.getNamePrefix() + datetime + ReportFilesInformation.Z05.getExtension();
+            String filename = ReportFilesInformation.Z05.getNamePrefix() + datetime
+                    + ReportFilesInformation.Z05.getExtension();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, ReportFilesInformation.Z05.getAttachment() + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.Z05.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z05.getExcelMediaType()))
                     .body(bytes);
         } catch (Exception e) {
             log.error("Error generating Z05 report", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
+        }
+    }
+
+    @GetMapping("/service-catalogue")
+    public ResponseEntity<byte[]> downloadServiceCatalogueReport() {
+        try {
+            log.info("Starting Service Catalogue report generation");
+            byte[] bytes = reportServiceCatalogueService.generateServiceCatalogueReportExcel();
+            log.info("Service Catalogue report generated successfully with {} bytes", bytes.length);
+
+            DateTimeFormatter formatter = DateTimeFormatter
+                    .ofPattern(ReportFilesInformation.SERVICE_CATALOGUE.getDateMask());
+            String datetime = LocalDateTime.now().format(formatter);
+            String filename = ReportFilesInformation.SERVICE_CATALOGUE.getNamePrefix() + datetime
+                    + ReportFilesInformation.SERVICE_CATALOGUE.getExtension();
+
+            log.info("Returning Service Catalogue report: {}", filename);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.SERVICE_CATALOGUE.getAttachment() + filename + "\"")
+                    .contentType(MediaType.parseMediaType(ReportFilesInformation.SERVICE_CATALOGUE.getExcelMediaType()))
+                    .body(bytes);
+        } catch (Exception e) {
+            log.error("Error generating Service Catalogue report", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error generating report", e);
         }
     }

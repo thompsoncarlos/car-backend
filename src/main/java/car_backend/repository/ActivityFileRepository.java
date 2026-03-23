@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ActivityFileRepository extends JpaRepository<ActivityFile, String> {
+public interface ActivityFileRepository extends JpaRepository<ActivityFile, Long> {
 
     @Query("SELECT DISTINCT a.activityId as serviceId, " +
             "NULL as serviceType, " +

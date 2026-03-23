@@ -1,0 +1,2 @@
+GET http://localhost:8080/api/report/service-catalogue
+Accept: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
