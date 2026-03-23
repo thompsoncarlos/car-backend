@@ -28,7 +28,9 @@ public class ReportServiceCatalogueServiceImpl implements ReportServiceCatalogue
 
         reportServiceCatalogueRepository.insertReportTable();
 
-        return reportServiceCatalogueRepository.findAll();
+        List<ReportServiceCatalogue> reports = reportServiceCatalogueRepository.findAll();
+        log.info("Service Catalogue report generated with {} records", reports.size());
+        return reports;
     }
 
     @Override

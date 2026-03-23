@@ -1,4 +1,4 @@
-cpackage car_backend.repository.reports;
+package car_backend.repository.reports;
 
 import car_backend.model.reports.ReportServiceCatalogue;
 import jakarta.transaction.Transactional;

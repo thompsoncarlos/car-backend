@@ -139,7 +139,9 @@ public class ReportsController {
     @GetMapping("/service-catalogue")
     public ResponseEntity<byte[]> downloadServiceCatalogueReport() {
         try {
+            log.info("Starting Service Catalogue report generation");
             byte[] bytes = reportServiceCatalogueService.generateServiceCatalogueReportExcel();
+            log.info("Service Catalogue report generated successfully with {} bytes", bytes.length);
 
             DateTimeFormatter formatter = DateTimeFormatter
                     .ofPattern(ReportFilesInformation.SERVICE_CATALOGUE.getDateMask());
@@ -147,6 +149,7 @@ public class ReportsController {
             String filename = ReportFilesInformation.SERVICE_CATALOGUE.getNamePrefix() + datetime
                     + ReportFilesInformation.SERVICE_CATALOGUE.getExtension();
 
+            log.info("Returning Service Catalogue report: {}", filename);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             ReportFilesInformation.SERVICE_CATALOGUE.getAttachment() + filename + "\"")
