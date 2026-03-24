@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum ReportFilesInformation {
 
-    Z01("ReportZ01_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
-    Z02("ReportZ02_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
-    Z03("ReportZ03_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
-    Z04("ReportZ04_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
-    Z05("ReportZ05_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
+    Z01("ReportZ01_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsx", "application/vnd.ms-excel"),
+    Z02("ReportZ02_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsx", "application/vnd.ms-excel"),
+    Z03("ReportZ03_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsx", "application/vnd.ms-excel"),
+    Z04("ReportZ04_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsx", "application/vnd.ms-excel"),
+    Z05("ReportZ05_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsx", "application/vnd.ms-excel"),
     CONTRACT_REPOSITORY("ContractRepository_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
     OPERATIONAL_ASSETS("OperationalAssets_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
     SERVICE_CATALOGUE("ServiceCatalogue_", "yyyyMMdd_HHmmss", "attachment; filename=\"", ".xlsX", "application/vnd.ms-excel"),
