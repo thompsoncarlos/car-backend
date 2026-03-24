@@ -1,22 +1,14 @@
 package car_backend.service.reports;
 
-import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ContractReport;
 import car_backend.repository.reports.ReportContractRepository;
 import car_backend.utils.reports.ReportsExcelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -30,26 +22,21 @@ public class ReportContractServiceImpl implements ReportContractService {
     ReportsExcelBuilder excelBuilder;
 
     @Override
-    // get the report content
-    public List<ContractReport> getReport() {
-
-        reportContractRepository.truncateReportTable();
-
-        reportContractRepository.insertReportTable();
-
-        return reportContractRepository.findAll();
-    }
-
-    @Override
     // generate the excel report following the template
     public byte[] generateContractReportExcel() {
         try {
             List<ContractReport> reports = getReport();
-            return excelBuilder.buildGenericReport(reports, "templates/contract_report.xlsx", 6, this::writeContractReport);
+            return excelBuilder.buildGenericReport(reports, "templates/contract_report.xlsx", 3, this::writeContractReport);
         } catch (IOException e) {
             log.error("Error generating contract report excel", e);
             throw new RuntimeException("Failed to generate contract report", e);
         }
+    }
+
+    // get the report content
+    private List<ContractReport> getReport() {
+        reportContractRepository.executeContractRepositoryReport();
+        return reportContractRepository.findAll();
     }
 
     // map the excel report fields with its model

@@ -1,24 +1,15 @@
 package car_backend.service.reports;
 
-import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ReportZ01;
 import car_backend.repository.reports.ReportZ01Repository;
 import car_backend.utils.reports.ReportsExcelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -31,43 +22,45 @@ public class ReportZ01ServiceImpl implements ReportZ01Service {
     ReportsExcelBuilder excelBuilder;
 
     @Override
-    // get the report content
-    public List<ReportZ01> getReport() {
-        return repository.generateReportData().stream().map(row -> {
-            ReportZ01 data = new ReportZ01();
-            data.setServiceId(Objects.isNull(row[0]) ? null : row[0].toString());
-            data.setServiceType(Objects.isNull(row[1]) ? null : row[1].toString());
-            data.setServiceUniqueLabel(Objects.isNull(row[2]) ? null : row[2].toString());
-            data.setServiceRecipientName(Objects.isNull(row[3]) ? null : row[3].toString());
-            data.setServiceRecipientCode(Objects.isNull(row[4]) ? null : row[4].toString());
-            data.setServiceProviderEntityName(Objects.isNull(row[5]) ? null : row[5].toString());
-            data.setServiceProviderEntityCode(Objects.isNull(row[6]) ? null : row[6].toString());
-            return data;
-        }).toList();
-    }
-
-    @Override
     // generate the excel report following the template
     public byte[] generateZ01ReportExcel() {
         try {
             List<ReportZ01> reports = getReport();
-            return excelBuilder.buildGenericReport(reports, "templates/report_Z01.xlsx", 5, this::writeZ01Report);
+            return excelBuilder.buildGenericReport(reports, "templates/report_Z01.xlsx", 16, this::writeZ01Report);
         } catch (IOException e) {
             log.error("Error generating Z01 report excel", e);
             throw new RuntimeException("Failed to generate Z01 report", e);
         }
     }
 
+    private List<ReportZ01> getReport() {
+        repository.executeReportZ01();
+        return repository.findAll();
+    }
+
     // map the excel report fields with its model
     private void writeZ01Report(ReportZ01 report, Row row) {
         int cellCount = 1;
-        excelBuilder.fillCellWithString(report.getServiceId(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceType(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceUniqueLabel(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceRecipientName(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceRecipientCode(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceProviderEntityName(), row, cellCount++);
-        excelBuilder.fillCellWithString(report.getServiceProviderEntityCode(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getServiceIdentifier0005(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceType0010(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getUniqueServiceTitleBkTaxo0020(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceRecipientName0030(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceRecipientCode0040(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceProviderEntityName0050(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceProviderEntityCode0060(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceProviderEntityCodeType0070(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getServiceProviderParentName0080(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getServiceProviderParentCode0090(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getServiceProviderParentCodeType0100(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getServiceProviderDelivery0110(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getCriticality0120(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getContractId0130(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getGoverningLaw0140(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getResolutionResilienceFeatures0150(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getResolutionResilienceBrp0160(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getResolutionResilienceAltMit0170(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getCriticalIctThdPartyServProvUndDora0180(), row, cellCount);
+        excelBuilder.fillCellWithString(report.getIctServiceUnderDora0190(), row, cellCount);
     }
 
 }

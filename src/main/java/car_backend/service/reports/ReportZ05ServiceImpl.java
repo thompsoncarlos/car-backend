@@ -1,20 +1,15 @@
 
 package car_backend.service.reports;
 
-import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ReportZ05;
 import car_backend.repository.reports.ReportZ05Repository;
 import car_backend.utils.reports.ReportsExcelBuilder;
-import jakarta.persistence.Column;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,17 +21,7 @@ public class ReportZ05ServiceImpl implements ReportZ05Service {
 
     @Autowired
     ReportsExcelBuilder excelBuilder;
-
-    @Override
-    public List<ReportZ05> getReport() {
-
-        reportZ05Repository.truncateReportTable();
-
-        reportZ05Repository.insertReportTable();
-
-        return reportZ05Repository.findAll();
-    }
-
+    
     @Override
     public byte[] generateZ05ReportExcel() {
         try {
@@ -47,6 +32,12 @@ public class ReportZ05ServiceImpl implements ReportZ05Service {
             throw new RuntimeException("Failed to generate report_Z05", e);
         }
     }
+
+    private List<ReportZ05> getReport() {
+        reportZ05Repository.executeReportZ05();
+        return reportZ05Repository.findAll();
+    }
+
 
     private void writeReportZ05(ReportZ05 reportZ05, Row row) {
         int cellCount = 1;

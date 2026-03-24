@@ -1,48 +1,52 @@
 package car_backend.service.reports;
 
-import car_backend.model.reports.ReportZ01;
 import car_backend.model.reports.ReportZ03;
-import car_backend.repository.relations.ActivityPersonRelRepository;
-import car_backend.repository.reports.ReportZ01Repository;
+import car_backend.repository.reports.ReportZ03Repository;
+import car_backend.utils.reports.ReportsExcelBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class ReportZ03ServiceImpl implements ReportZ03Service {
 
     @Autowired
-    private ReportZ01Repository z01Repository;
+    private ReportZ03Repository z03Repository;
 
     @Autowired
-    private ActivityPersonRelRepository activityPersonRelRepository;
+    ReportsExcelBuilder excelBuilder;
 
     @Override
-    public List<ReportZ03> generateReportZ03() {
-
-        List<ReportZ03> output = new ArrayList<>();
-
-        List<ReportZ01> z01List = z01Repository.findAll();
-        if (z01List.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    public byte[] generateZ03ReportExcel() {
+        try {
+            List<ReportZ03> reports = getReport();
+            return excelBuilder.buildGenericReport(reports, "templates/report_Z03.xlsx", 16, this::writeZ03Report);
+        } catch (IOException e) {
+            log.error("Error generating Z03 report excel", e);
+            throw new RuntimeException("Failed to generate Z03 report", e);
         }
-        List<String> activities = z01List.stream().map(ReportZ01::getServiceId).toList();
-
-        // assim vai dar erro, precisa pegar o ID da atividade > com isso pegar as roles > com as roles pegar os uos
-        // caso tenha mais de um uo, para um mesma role e em uma mesma atividade, tem que colocar as dashs --
-        // so adiconar uma nova linha se tiver roles diferentes, no caso da pra fazer no mapeamento das UO por person,
-        // vai precisar confirmar o role do PERSON_ID, caso ja esteja associado a aquele ACTIVITIY_ID, concatena com outro
-        // uo anterior... talvez seja mais simples por meio de query 
-
-
-
-        return List.of();
     }
+
+    private List<ReportZ03> getReport() {
+        z03Repository.executeReportZ03();
+        return z03Repository.findAll();
+    }
+
+      private void writeZ03Report(ReportZ03 report, Row row) {
+        int cellCount = 1;
+        excelBuilder.fillCellWithString(report.getServiceIdentifier0005(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getServiceType0010(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getUniqueServiceTitleBkTaxo0020(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getRoleIdentifier0030(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getRoleName0040(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getDepartment0050(), row, cellCount++);
+        excelBuilder.fillCellWithString(report.getCriticality0060(), row, cellCount++);
+
+      }
 }

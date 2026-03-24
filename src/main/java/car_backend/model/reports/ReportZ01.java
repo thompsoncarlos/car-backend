@@ -15,64 +15,64 @@ import lombok.*;
 public class ReportZ01 {
 
     @Id
-    @Column(name = "SERVICE_IDENTIFIER")
-    private String serviceId;
+    @Column(name = "SERVICE_IDENTIFIER_0005", nullable = false)
+    private String serviceIdentifier0005;
 
-    @Column(name = "SERVICE_TYPE")
-    private String serviceType;
+    @Column(name = "SERVICE_TYPE_0010")
+    private String serviceType0010;
 
-    @Column(name = "UNIQUE_SERVICE_TITLE_BK_TAXO")
-    private String serviceUniqueLabel;
+    @Column(name = "UNIQUE_SERVICE_TITLE_BK_TAXO_0020")
+    private String uniqueServiceTitleBkTaxo0020;
 
-    @Column(name = "SERVICE_RECIPIENT_NAME")
-    private String serviceRecipientName;
+    @Column(name = "SERVICE_RECIPIENT_NAME_0030")
+    private String serviceRecipientName0030;
 
-    @Column(name = "SERVICE_RECIPIENT_CODE")
-    private String serviceRecipientCode;
+    @Column(name = "SERVICE_RECIPIENT_CODE_0040")
+    private String serviceRecipientCode0040;
 
-    @Column(name = "COL__0050")
-    private String serviceProviderEntityName;
+    @Column(name = "SERVICE_PROVIDER_ENTITY_NAME_0050")
+    private String serviceProviderEntityName0050;
 
-    @Column(name = "COL__0060")
-    private String serviceProviderEntityCode;
+    @Column(name = "SERVICE_PROVIDER_ENTITY_CODE_0060")
+    private String serviceProviderEntityCode0060;
 
-    @Column(name = "COL__0070")
-    private String serviceProviderEntityType;
+    @Column(name = "SERVICE_PROVIDER_ENTITY_CODE_TYPE_0070")
+    private String serviceProviderEntityCodeType0070;
 
-    @Column(name = "COL__0080")
-    private String serviceProviderParentName;
+    @Column(name = "SERVICE-PROVIDER_PARENT_NAME_0080")
+    private String serviceProviderParentName0080;
 
-    @Column(name = "COL__0090")
-    private String serviceProviderParentCode;
+    @Column(name = "SERVICE_PROVIDER_PARENT_CODE_0090")
+    private String serviceProviderParentCode0090;
 
-    @Column(name = "COL__0100")
-    private String serviceProviderParentType;
+    @Column(name = "SERVICE_PROVIDER_PARENT_CODE_TYPE_0100")
+    private String serviceProviderParentCodeType0100;
 
-    @Column(name = "COL__0110")
-    private String serviceProviderDelivery;
+    @Column(name = "SERVICE_PROVIDER_DELIVERY_0110")
+    private String serviceProviderDelivery0110;
 
-    @Column(name = "COL__0120")
-    private String criticality;
+    @Column(name = "CRITICALITY_0120")
+    private String criticality0120;
 
-    @Column(name = "COL__0130")
-    private String contractId;
+    @Column(name = "CONTRACT_ID_0130")
+    private String contractId0130;
 
-    @Column(name = "COL__0140")
-    private String governingLaw;
+    @Column(name = "GOVERNING_LAW_0140")
+    private String governingLaw0140;
 
-    @Column(name = "COL__0150")
-    private String resolutionFeatures;
+    @Column(name = "RESOLUTION_RESILIENCE_FEATURES_0150")
+    private String resolutionResilienceFeatures0150;
 
-    @Column(name = "COL__0160")
-    private String businessReorganizationPlan;
+    @Column(name = "RESOLUTION_RESILIENCE_BRP_0160")
+    private String resolutionResilienceBrp0160;
 
-    @Column(name = "COL__0170")
-    private String alternativeMitigatingActions;
+    @Column(name = "RESOLUTION_RESILIENCE_ALT_MIT_0170")
+    private String resolutionResilienceAltMit0170;
 
-    @Column(name = "COL__0180")
-    private String criticalIct;
+    @Column(name = "CRITICAL_ICT_THD_PARTY_SERV_PROV_UND_DORA_0180")
+    private String criticalIctThdPartyServProvUndDora0180;
 
-    @Column(name = "COL__0190")
-    private String ictService;
+    @Column(name = "ICT_SERVICE_UNDER_DORA_0190")
+    private String ictServiceUnderDora0190;
 
 }
