@@ -17,7 +17,7 @@ public interface ReportServiceCatalogueRepository extends JpaRepository<ServiceC
 
         @Modifying
         @Transactional
-        @Query(value = "INSERT", nativeQuery = true)
+        @Query(value = "SELECT", nativeQuery = true)
         void insertReportTable();
 
         @Modifying
