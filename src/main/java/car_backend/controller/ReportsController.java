@@ -3,6 +3,7 @@ package car_backend.controller;
 import car_backend.model.enums.ReportFilesInformation;
 import car_backend.model.reports.ContractReport;
 import car_backend.service.reports.ReportContractService;
+import car_backend.service.reports.ReportServiceCatalogueService;
 import car_backend.service.reports.ReportZ01Service;
 import car_backend.service.reports.ReportZ02Service;
 import car_backend.service.reports.ReportZ03Service;
@@ -46,6 +47,9 @@ public class ReportsController {
     ReportZ05Service reportZ05Service;
 
     @Autowired
+    ReportServiceCatalogueService reportServiceCatalogueService;
+
+    @Autowired
     ReportContractService reportContractService;
 
     private final ReportsExcelBuilder excelBuilder;
@@ -62,10 +66,12 @@ public class ReportsController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ReportFilesInformation.Z01.getDateMask());
             String datetime = LocalDateTime.now().format(formatter);
             String filename = ReportFilesInformation.Z01.getNamePrefix() + datetime
+                   
                     + ReportFilesInformation.Z01.getExtension();
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
+                           
                             ReportFilesInformation.Z01.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z01.getExcelMediaType()))
                     .body(bytes);
@@ -126,8 +132,9 @@ public class ReportsController {
             String datetime = LocalDateTime.now().format(formatter);
             String filename = ReportFilesInformation.Z04.getNamePrefix() + datetime
                     + ReportFilesInformation.Z04.getExtension();
-
             return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.Z04.getAttachment() + filename + "\"")
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             ReportFilesInformation.Z04.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z04.getExcelMediaType()))
@@ -147,8 +154,9 @@ public class ReportsController {
             String datetime = LocalDateTime.now().format(formatter);
             String filename = ReportFilesInformation.Z05.getNamePrefix() + datetime
                     + ReportFilesInformation.Z05.getExtension();
-
             return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            ReportFilesInformation.Z05.getAttachment() + filename + "\"")
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             ReportFilesInformation.Z05.getAttachment() + filename + "\"")
                     .contentType(MediaType.parseMediaType(ReportFilesInformation.Z05.getExcelMediaType()))
